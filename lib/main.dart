@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,6 +12,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Enena Anchi'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -60,8 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Text(detailContents[position], 
                               style: TextStyle(fontSize: 25.0)),
                             ),
-                            color: position % 3 == 0 ? 
-                            CupertinoColors.activeBlue : CupertinoColors.activeGreen ,
+                            color: position % 2 == 0 ?  CupertinoColors.activeBlue : CupertinoColors.activeGreen ,
                             );
                           },                         
                      ),
