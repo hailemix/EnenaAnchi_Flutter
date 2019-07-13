@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Text(detailContents[position], 
                               style: TextStyle(fontSize: 25.0)),
                             ),
-                            color: position % 2 == 0 ? 
+                            color: position % 3 == 0 ? 
                             CupertinoColors.activeBlue : CupertinoColors.activeGreen ,
                             );
                           },                         
