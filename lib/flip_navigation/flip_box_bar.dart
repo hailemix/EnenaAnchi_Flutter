@@ -16,7 +16,7 @@ class FlipBoxBar extends StatefulWidget {
      this.animationDuration = const Duration(milliseconds: 100),
      @required this.onIndexChanged,
      @required this.selectedIndex,
-     this.navBarHeight = 100.0
+     this.navBarHeight = 80.0
     }
   );
   
@@ -46,7 +46,7 @@ class _FlipBoxBarState extends State<FlipBoxBar> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     _changeValue();
     return Container(
-      height: 100,
+      height: 80,
       child: Row(
         children: widget.items.map((item){
           int index = widget.items.indexOf(item);

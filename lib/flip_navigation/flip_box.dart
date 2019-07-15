@@ -1,6 +1,8 @@
 import 'dart:math';
-
+import 'package:enena_anchi/contentTwo.dart';
+import 'package:enena_anchi/flip_navigation/flip_bar_item.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class FlipBox extends StatefulWidget {
 
@@ -9,6 +11,7 @@ class FlipBox extends StatefulWidget {
     final double height;
     final AnimationController controller;
     final VoidCallback onTapped;
+    
 
     FlipBox({
       this.bottomChild,
@@ -27,6 +30,8 @@ class _FlipBoxState extends State<FlipBox> with SingleTickerProviderStateMixin{
   
   Animation animation;
   AnimationController controller;
+  List<FlipBarItem> zItem = List<FlipBarItem>();
+
 
    @override
     void initState() {
@@ -45,6 +50,10 @@ class _FlipBoxState extends State<FlipBox> with SingleTickerProviderStateMixin{
      });
      });
   }
+
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,6 +75,7 @@ class _FlipBoxState extends State<FlipBox> with SingleTickerProviderStateMixin{
             onTap: (){
               widget.onTapped();
               controller.forward();
+             
             },
             child: animation.value < (85 * pi / 180) ?
             Transform(
@@ -77,7 +87,19 @@ class _FlipBoxState extends State<FlipBox> with SingleTickerProviderStateMixin{
               child: Container(
                 child: Center(child: widget.topChild),
               ),
-            ) : Container()
+            ) : Container(
+              child: GestureDetector(
+              
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context){
+
+                   
+                   return ContentTwo();
+                  }
+                   ));
+                },
+              ),
+            )
           )
         ],
       ),

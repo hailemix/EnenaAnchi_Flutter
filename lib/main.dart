@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:enena_anchi/contentTwo.dart';
 import 'package:enena_anchi/flip_navigation/flip_bar_item.dart';
 import 'package:enena_anchi/flip_navigation/flip_box_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,13 +46,14 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedIndex:  selectedIndex,
       items: [
         FlipBarItem(icon: Icon(Icons.face),text: Text("Love"), fontColor: CupertinoColors.activeBlue, backColor: CupertinoColors.lightBackgroundGray),
-        FlipBarItem(icon: Icon(Icons.memory),text: Text("Memory"), fontColor: CupertinoColors.activeOrange, backColor: CupertinoColors.extraLightBackgroundGray),
-        FlipBarItem(icon: Icon(Icons.score),text: Text("Passion"), fontColor: CupertinoColors.activeGreen, backColor: CupertinoColors.darkBackgroundGray),
-        FlipBarItem(icon: Icon(Icons.face),text: Text("About Us"), fontColor: CupertinoColors.destructiveRed, backColor: CupertinoColors.inactiveGray),
+        FlipBarItem(icon: Icon(Icons.satellite),text: Text("Memory"), fontColor: CupertinoColors.activeOrange, backColor: CupertinoColors.extraLightBackgroundGray),
+        FlipBarItem(icon: Icon(Icons.games),text: Text("Passion"), fontColor: CupertinoColors.activeGreen, backColor: CupertinoColors.darkBackgroundGray),
+        FlipBarItem(icon: Icon(Icons.account_box),text: Text("About Us"), fontColor: CupertinoColors.destructiveRed, backColor: CupertinoColors.inactiveGray),
       ],
       onIndexChanged: (newIndex){
         setState(() {
           selectedIndex = newIndex;
+
         });
       },
       ),

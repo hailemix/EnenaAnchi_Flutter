@@ -1,7 +1,8 @@
 import 'package:enena_anchi/flip_navigation/flip_box.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-class FlipBarElement extends StatelessWidget {
+class FlipBarElement extends StatefulWidget {
 
   final Widget icon;
   final Widget text;
@@ -16,35 +17,40 @@ class FlipBarElement extends StatelessWidget {
   this.controller,this.onTapped,this.index,this.appBarHeight);
 
   @override
+  _FlipBarElementState createState() => _FlipBarElementState();
+}
+
+class _FlipBarElementState extends State<FlipBarElement> {
+  @override
   Widget build(BuildContext context) {
     return FlipBox(
       bottomChild: Container(
         width: double.infinity,
         height: double.infinity,
-        color: backColor,
+        color: widget.backColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            icon,
-            text
+            widget.icon,
+            widget.text
           ],
         ),
       ),
       topChild: Container(
         width: double.infinity,
         height: double.infinity,
-        color: frontColor,
+        color: widget.frontColor,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            icon,
+            widget.icon,
           ],
         ),
       ),
       onTapped: (){
-        onTapped(index);
+        widget.onTapped(widget.index);
       },
-      height: appBarHeight,
+      height: widget.appBarHeight,
     );
   }
 }
