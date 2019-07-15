@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:enena_anchi/flip_navigation/flip_bar_item.dart';
+import 'package:enena_anchi/flip_navigation/flip_box_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -34,13 +36,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
   
    var jsonList = DefaultAssetBundle.of(context).loadString('jsonStore/enenaAnchi.json');
- 
+    int selectedIndex = 0;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(8.0),
+      bottomNavigationBar: FlipBoxBar(
+      selectedIndex:  selectedIndex,
+      items: [
+        FlipBarItem(icon: Icon(Icons.face),text: Text("Love"), fontColor: CupertinoColors.activeBlue, backColor: CupertinoColors.lightBackgroundGray),
+        FlipBarItem(icon: Icon(Icons.memory),text: Text("Memory"), fontColor: CupertinoColors.activeOrange, backColor: CupertinoColors.extraLightBackgroundGray),
+        FlipBarItem(icon: Icon(Icons.score),text: Text("Passion"), fontColor: CupertinoColors.activeGreen, backColor: CupertinoColors.darkBackgroundGray),
+        FlipBarItem(icon: Icon(Icons.face),text: Text("About Us"), fontColor: CupertinoColors.destructiveRed, backColor: CupertinoColors.inactiveGray),
+      ],
+      onIndexChanged: (newIndex){
+        setState(() {
+          selectedIndex = newIndex;
+        });
+      },
       ),
       body: Container(
           child: FutureBuilder(
