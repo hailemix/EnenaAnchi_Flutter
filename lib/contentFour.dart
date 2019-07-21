@@ -6,8 +6,19 @@ class ContentFour extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('About US'),
-      ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Page Four'),
+            FlatButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          child: Text('Back',style: TextStyle(color: Colors.white),),
+        ),
+          ],
+        )
+    ),
     );
   }
 }

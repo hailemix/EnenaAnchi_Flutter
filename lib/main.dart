@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:enena_anchi/contentTwo.dart';
 import 'package:enena_anchi/flip_navigation/flip_bar_item.dart';
+import 'package:enena_anchi/flip_navigation/flip_box.dart';
 import 'package:enena_anchi/flip_navigation/flip_box_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -25,19 +26,18 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
   
-
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
 
+    int selectedIndex = 0;
+   String selectedContent = 'contentOne'; 
 
       @override
   Widget build(BuildContext context) {
-  
    var jsonList = DefaultAssetBundle.of(context).loadString('jsonStore/enenaAnchi.json');
-    int selectedIndex = 0;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -53,16 +53,17 @@ class _MyHomePageState extends State<MyHomePage> {
       onIndexChanged: (newIndex){
         setState(() {
           selectedIndex = newIndex;
-
-        });
+        }
+        );
       },
       ),
       body: Container(
           child: FutureBuilder(
               future: jsonList,
               builder: (context, snapshot) {
-                var newData = json.decode(snapshot.data);
-                var detailContents = newData[0]['allContent'];
+                var newData = json.decode(snapshot.data); 
+           
+                var detailContents = newData[0][selectedContent];
                 return Builder(
                   builder : (BuildContext context) {
                     return Center(       
@@ -79,10 +80,15 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           },                         
                      ),
+                     
                     );
                   },
+                  
                 );
-              })),
+              },
+              
+              
+              )),
     );
 
   }

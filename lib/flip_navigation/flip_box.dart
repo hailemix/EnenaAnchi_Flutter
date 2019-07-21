@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:enena_anchi/contentThree.dart';
 import 'package:enena_anchi/contentTwo.dart';
 import 'package:enena_anchi/flip_navigation/flip_bar_element.dart';
 import 'package:enena_anchi/main.dart';
@@ -12,6 +13,7 @@ class FlipBox extends StatefulWidget {
     final double height;
     final AnimationController controller;
     final VoidCallback onTapped;
+    final index;
 
     
 
@@ -21,20 +23,22 @@ class FlipBox extends StatefulWidget {
       this.height = 100,
       this.controller,
       this.onTapped,
+      this.index
      
     });
 
 
   @override
-  _FlipBoxState createState() => _FlipBoxState();
+  FlipBoxState createState() => FlipBoxState();
 }
 
-class _FlipBoxState extends State<FlipBox> with SingleTickerProviderStateMixin{
+class FlipBoxState extends State<FlipBox> with SingleTickerProviderStateMixin{
   
   Animation animation;
   AnimationController controller;
   FlipBarElement navigatorIndex ;
   Widget nextPage;
+ 
 
 
    @override
@@ -88,7 +92,34 @@ class _FlipBoxState extends State<FlipBox> with SingleTickerProviderStateMixin{
               child: Container(
                 child: Center(child: widget.topChild),
               ),
-            ) : Container()
+            ) : Container(
+
+              
+              child: GestureDetector(
+                onTap: (){
+                     widget.index != 0 ? Navigator.push(context, MaterialPageRoute(builder: (context){  
+                      
+                     switch(widget.index) {
+                        case 0:
+                        nextPage = MyApp();
+                        break;
+                        case 1:
+                        nextPage = ContentTwo();  
+                        break;
+                        case 2:
+                        nextPage = ContentThree();        
+                        break;
+                        default:
+                     
+                      }         
+                   return nextPage;
+                  }
+                   )) :
+                    Navigator.pop(context);
+                }
+                
+              ),
+          ),
           )
         ],
       ),

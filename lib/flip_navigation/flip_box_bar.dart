@@ -9,6 +9,7 @@ class FlipBoxBar extends StatefulWidget {
   final ValueChanged<int> onIndexChanged;
   final int selectedIndex;
   final double navBarHeight;
+  
 
   FlipBoxBar(
     {

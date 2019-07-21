@@ -1,6 +1,5 @@
-import 'package:enena_anchi/contentTwo.dart';
+
 import 'package:enena_anchi/flip_navigation/flip_box.dart';
-import 'package:enena_anchi/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +23,7 @@ class FlipBarElement extends StatefulWidget {
 
 class _FlipBarElementState extends State<FlipBarElement> {
 
-  Widget nextPage;
+
   @override
   Widget build(BuildContext context) {
     return FlipBox(
@@ -53,17 +52,10 @@ class _FlipBarElementState extends State<FlipBarElement> {
       ),
       onTapped: (){
         widget.onTapped(widget.index);
-         Navigator.push(context, MaterialPageRoute(builder: (context){  
-                      if (widget.index == 0 || widget.index == 2) {
-                        nextPage = MyApp();
-                      } else if (widget.index == 1){
-                        nextPage = ContentTwo();
-                      }
-                   return nextPage;
-                  }
-                   ));
+       
       },
       height: widget.appBarHeight,
+      index: widget.index,
     );
   }
 }

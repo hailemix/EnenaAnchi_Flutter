@@ -11,9 +11,19 @@ class _ContentTwoState extends State<ContentThree> {
   Widget build(BuildContext context) {
     return Container(
       child: Center(
-        child: Text('PAGE 3..'),
-      ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text('Page Three'),
+            FlatButton(
+          onPressed: (){
+            Navigator.pop(context);
+          },
+          child: Text('Back',style: TextStyle(color: Colors.white),),
+        ),
+          ],
+        )
+    ),
     );
   }
-}
 }
