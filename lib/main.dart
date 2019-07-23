@@ -1,8 +1,5 @@
 import 'dart:convert';
-import 'package:enena_anchi/contentTwo.dart';
-import 'package:enena_anchi/flip_navigation/flip_bar_item.dart';
-import 'package:enena_anchi/flip_navigation/flip_box.dart';
-import 'package:enena_anchi/flip_navigation/flip_box_bar.dart';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -32,44 +29,73 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
 
-    int selectedIndex = 0;
-   String selectedContent = 'contentOne'; 
+   String selectedContent; 
+   List<BottomNavigationBarItem> bottomIcons;
+   var jsonList;
+   var detailContents;
 
+     @override
+  void initState() {
+    super.initState();
+    selectedContent = 'contentOne';
+   jsonList = DefaultAssetBundle.of(context).loadString('jsonStore/enenaAnchi.json'); 
+    bottomIcons = [
+     BottomNavigationBarItem(title: Text('Love'),icon: Icon(Icons.language)),
+     BottomNavigationBarItem(title: Text('Balads'),icon: Icon(Icons.satellite)),
+     BottomNavigationBarItem(title: Text('Sad'),icon: Icon(Icons.face)),
+     BottomNavigationBarItem(title: Text('About Us'),icon: Icon(Icons.album)),
+     ];
+  }
+   
       @override
   Widget build(BuildContext context) {
-   var jsonList = DefaultAssetBundle.of(context).loadString('jsonStore/enenaAnchi.json');
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+   
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items: bottomIcons,
+        onTap: (int index){
+          setState(() {
+            
+          });
+        },
+
       ),
-      bottomNavigationBar: FlipBoxBar(
-      selectedIndex:  selectedIndex,
-      items: [
-        FlipBarItem(icon: Icon(Icons.face),text: Text("Love"), fontColor: CupertinoColors.activeBlue, backColor: CupertinoColors.lightBackgroundGray),
-        FlipBarItem(icon: Icon(Icons.satellite),text: Text("Memory"), fontColor: CupertinoColors.activeOrange, backColor: CupertinoColors.extraLightBackgroundGray),
-        FlipBarItem(icon: Icon(Icons.games),text: Text("Passion"), fontColor: CupertinoColors.activeGreen, backColor: CupertinoColors.darkBackgroundGray),
-        FlipBarItem(icon: Icon(Icons.account_box),text: Text("About Us"), fontColor: CupertinoColors.destructiveRed, backColor: CupertinoColors.inactiveGray),
-      ],
-      onIndexChanged: (newIndex){
-        setState(() {
-          selectedIndex = newIndex;
-        }
-        );
-      },
-      ),
-      body: Container(
+       tabBuilder: (BuildContext context, int position){
+         return CupertinoTabView(
+           builder: (BuildContext context){
+             return Container(
           child: FutureBuilder(
               future: jsonList,
               builder: (context, snapshot) {
-                var newData = json.decode(snapshot.data); 
-           
-                var detailContents = newData[0][selectedContent];
+               
+               try {
+                   var newData = json.decode(snapshot.data);
+                   detailContents = newData[0][selectedContent];  
+                   switch(position){
+                     case 0:
+                     selectedContent = "contentOne";
+                     break;
+                     case 1:
+                     selectedContent = "contentTwo";
+                     break;
+                     case 2:
+                     selectedContent = "contentThree";
+                     break;
+                     case 3:
+                     selectedContent = "contentThree";
+                     break;
+                     default:
+                     selectedContent = "contentOne";
+                   }  
+               }   catch(e){
+               print("Error is found on $e");
+              }
                 return Builder(
                   builder : (BuildContext context) {
                     return Center(       
                      child: PageView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data.length,
+                        itemCount: snapshot.data != null ? snapshot.data.length : null,
                           itemBuilder: (context, position){
                             return Container(
                             child: Center(
@@ -85,10 +111,15 @@ class MyHomePageState extends State<MyHomePage> {
                   },
                   
                 );
-              },
+              }
+            
               
               
-              )),
+              ));
+           },
+         );
+       },
+       
     );
 
   }
