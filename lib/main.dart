@@ -1,3 +1,4 @@
+import 'package:enena_anchi/about_us.dart';
 import 'package:enena_anchi/json_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class MyHomePageState extends State<MyHomePage> {
      @override
   void initState() {
     super.initState();
-   // selectedContent = 'contentOne';
+ 
     bottomIcons = [
      BottomNavigationBarItem(title: Text('Love'),icon: Icon(Icons.language)),
      BottomNavigationBarItem(title: Text('Balads'),icon: Icon(Icons.satellite)),
@@ -80,6 +81,10 @@ class MyHomePageState extends State<MyHomePage> {
                             break;
                             case 2:
                             finalContent = snapshot.data.contentThree[swipePagePosition];
+                            break;
+                            case 3:
+                            return  AboutUs();
+                  
                           }
                           
                             return Container(
@@ -95,30 +100,7 @@ class MyHomePageState extends State<MyHomePage> {
                          return Center(child: Text("${snapshot.error}"));
                        } 
                        return Center(child: CircularProgressIndicator());
-               /*
-                return Builder(
-                  builder : (BuildContext context) {
-                    return Center(       
-                     child: PageView.builder(
-                        scrollDirection: Axis.horizontal,
-                          
-                          itemBuilder: (context, swipePagePosition){
-                          
-                            return Container(
-                            child: Center(
-                              child: Text(detailContents[swipePagePosition] , 
-                              style: TextStyle(fontSize: 25.0)),
-                            ),
-                            
-                            );
-                          },                         
-                     ),
-                     
-                    );
-                  },
-                  
-                );
-                */
+       
               }
             
               
@@ -131,14 +113,6 @@ class MyHomePageState extends State<MyHomePage> {
     );
 
   }
-/*
-  Future loadContent() async {
-    var jsonList = await DefaultAssetBundle.of(context).loadString('jsonStore/enenaAnchi.json');  
-     final newData = json.decode(jsonList);
-     return newData;
-  }
-
-  */
  
 }
 
