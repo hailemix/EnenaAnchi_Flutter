@@ -1,7 +1,24 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+
+Future<String>  _loadContents() async {
+return await rootBundle.loadString('jsonStore/enenaAnchi.json');
+}
+
+Future<JsonContent> loadContent() async {
+   await wait(400);
+  String jsonString = await _loadContents();
+  final jsonResponse = json.decode(jsonString);
+  return JsonContent.fromJson(jsonResponse);
+
+}
+
+Future wait(int millisecond) {
+  return Future.delayed(Duration(milliseconds: 400),() => {});
+}
 
 void main() => runApp(MyApp());
 
@@ -12,7 +29,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Enena Anchi'),
+      home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -20,25 +37,23 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
 
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
   
   @override
   MyHomePageState createState() => MyHomePageState();
 }
 
 class MyHomePageState extends State<MyHomePage> {
-
-   String selectedContent; 
-   List<BottomNavigationBarItem> bottomIcons;
-   var jsonList;
-   var detailContents;
+ 
+    List<BottomNavigationBarItem> bottomIcons;
+    List containerColor = [Colors.teal[200],Colors.blue[200],Colors.brown[200],Colors.cyan[200]];
+    //String selectedContent;
+   // var detailContents;
+  
 
      @override
   void initState() {
     super.initState();
-    selectedContent = 'contentOne';
-   jsonList = DefaultAssetBundle.of(context).loadString('jsonStore/enenaAnchi.json'); 
+   // selectedContent = 'contentOne';
     bottomIcons = [
      BottomNavigationBarItem(title: Text('Love'),icon: Icon(Icons.language)),
      BottomNavigationBarItem(title: Text('Balads'),icon: Icon(Icons.satellite)),
@@ -49,60 +64,69 @@ class MyHomePageState extends State<MyHomePage> {
    
       @override
   Widget build(BuildContext context) {
+
+ 
    
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         items: bottomIcons,
-        onTap: (int index){
-          setState(() {
-            
-          });
-        },
-
+  
       ),
-       tabBuilder: (BuildContext context, int position){
+       tabBuilder: (BuildContext context, int tabPosition){
+         
          return CupertinoTabView(
-           builder: (BuildContext context){
+           builder: (BuildContext context){   
+              
              return Container(
-          child: FutureBuilder(
-              future: jsonList,
+               color: containerColor[tabPosition],
+          child: FutureBuilder<JsonContent>(
+              future: loadContent(),
               builder: (context, snapshot) {
-               
-               try {
-                   var newData = json.decode(snapshot.data);
-                   detailContents = newData[0][selectedContent];  
-                   switch(position){
-                     case 0:
-                     selectedContent = "contentOne";
-                     break;
-                     case 1:
-                     selectedContent = "contentTwo";
-                     break;
-                     case 2:
-                     selectedContent = "contentThree";
-                     break;
-                     case 3:
-                     selectedContent = "contentThree";
-                     break;
-                     default:
-                     selectedContent = "contentOne";
-                   }  
-               }   catch(e){
-               print("Error is found on $e");
-              }
+                       if(snapshot.hasData){
+                         return PageView.builder(
+                              scrollDirection: Axis.horizontal,
+                          
+                          itemBuilder: (context, swipePagePosition){
+                           var finalContent = '';
+                          switch(tabPosition){
+                            case 0:
+                            finalContent = snapshot.data.contentOne[swipePagePosition];
+                            break;
+                            case 1:
+                            finalContent = snapshot.data.contentTwo[swipePagePosition];
+                            break;
+                            case 2:
+                            finalContent = snapshot.data.contentThree[swipePagePosition];
+                          }
+                          
+                            return Container(
+                            child: Center(
+                              child: Text(finalContent , 
+                              style: TextStyle(fontSize: 25.0)),
+                            ),
+                            
+                            );
+                          },
+                         );
+                       } else if(snapshot.hasError){
+                         return Text("${snapshot.error}");
+                       } 
+                       return Center(child: CircularProgressIndicator());
+               /*
                 return Builder(
                   builder : (BuildContext context) {
                     return Center(       
                      child: PageView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data != null ? snapshot.data.length : null,
-                          itemBuilder: (context, position){
+                          
+                          itemBuilder: (context, swipePagePosition){
+                          
                             return Container(
                             child: Center(
-                              child: Text(detailContents[position], 
+                              child: Text(detailContents[swipePagePosition] , 
                               style: TextStyle(fontSize: 25.0)),
                             ),
-                            color: position % 3 == 0 ?  CupertinoColors.activeBlue : CupertinoColors.activeGreen ,
+                            
                             );
                           },                         
                      ),
@@ -111,6 +135,7 @@ class MyHomePageState extends State<MyHomePage> {
                   },
                   
                 );
+                */
               }
             
               
@@ -123,5 +148,53 @@ class MyHomePageState extends State<MyHomePage> {
     );
 
   }
+/*
+  Future loadContent() async {
+    var jsonList = await DefaultAssetBundle.of(context).loadString('jsonStore/enenaAnchi.json');  
+     final newData = json.decode(jsonList);
+     return newData;
+  }
+
+  */
  
 }
+
+class JsonContent {
+
+  List<String> contentOne;
+  List<String> contentTwo;
+  List<String> contentThree;
+  JsonContent({this.contentOne,this.contentTwo,this.contentThree});
+
+  factory JsonContent.fromJson(Map<String, dynamic> parsedJson){
+
+ List<String> contentOneData = parsedJson['contentOne'].cast<String>();
+ List<String> contentTwoData = parsedJson['contentTwo'].cast<String>();
+ List<String> contentThreeData = parsedJson['contentThree'].cast<String>();
+     return JsonContent(
+       contentOne: contentOneData,
+       contentTwo: contentTwoData,
+       contentThree: contentThreeData
+     );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
