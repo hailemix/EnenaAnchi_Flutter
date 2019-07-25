@@ -1,3 +1,4 @@
+
 import 'package:enena_anchi/about_us.dart';
 import 'package:enena_anchi/json_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
  
     List<BottomNavigationBarItem> bottomIcons;
-    List containerColor = [Colors.teal[200],Colors.blue[200],Colors.brown[200],Colors.cyan[200]];
+    List containerColor = [Colors.teal[400],Colors.blueGrey,Colors.brown[300],Colors.white];
     var finalContent = '';
   
 
@@ -53,6 +54,9 @@ class MyHomePageState extends State<MyHomePage> {
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         items: bottomIcons,
+        onTap: (int tappedPage){
+           
+        },
   
       ),
        tabBuilder: (BuildContext context, int tabPosition){
@@ -85,12 +89,23 @@ class MyHomePageState extends State<MyHomePage> {
                   
                           }
                           
-                            return Container(
-                            child: Center(
-                              child: Text(finalContent , 
-                              style: TextStyle(fontSize: 25.0)),
-                            ),
-                            
+                            return Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Container(
+                                width: 250,
+                                height: 250,
+                                decoration: BoxDecoration(
+                                 shape: BoxShape.rectangle,
+                                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                                 border: Border.all(style: BorderStyle.solid,color: Colors.white)
+                              
+                                ),
+                              child: Center(
+                                child: Text(finalContent , 
+                                style: TextStyle(fontSize: 25.0,decoration: TextDecoration.none,color: Colors.white)),
+                              ),
+                              
+                              ),
                             );
                           },
                          );
