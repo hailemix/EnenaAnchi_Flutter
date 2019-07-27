@@ -32,7 +32,7 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> {
  
     List<BottomNavigationBarItem> bottomIcons;
-    List containerColor = [Colors.teal[400],Colors.blueGrey,Colors.brown[300],Colors.white];
+    List containerColor = [Colors.teal[500],Colors.blueGrey,Colors.brown[300],Colors.white];
     var finalContent = '';
 
   
@@ -123,12 +123,30 @@ class MyHomePageState extends State<MyHomePage> {
                        } 
                        return Center(child: CircularProgressIndicator());     
               }
-   ))
+   )),
+   tabPosition != 3 ? Column(
+     mainAxisAlignment: MainAxisAlignment.end,
+     children: <Widget>[
+       Padding(
+         padding: const EdgeInsets.only(right: 60,bottom: 110),
+         child: Row(
+           crossAxisAlignment: CrossAxisAlignment.end,
+           mainAxisAlignment: MainAxisAlignment.end,
+           children: <Widget>[
+            CupertinoButton(child: Icon(CupertinoIcons.share,color: Colors.white,size: 45.0,),onPressed: (){
+              // TODO
+            },)
+           ],
+         ),
+       ),
+     ],
+   ) : Container(),
                ],
              );
            },
          );
        },
+       
        
     );
 
