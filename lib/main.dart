@@ -72,7 +72,7 @@ class MyHomePageState extends State<MyHomePage> {
                children: <Widget>[
                  Container(
                    width: 350,
-                   height: 500,
+                   height: 550,
                decoration: BoxDecoration(
                  color: containerColor[tabPosition],
                  border: Border.all(color: Colors.white,style: BorderStyle.solid),
@@ -105,10 +105,18 @@ class MyHomePageState extends State<MyHomePage> {
                           }  
                             return 
                                Center(
-                                child: Text(finalContent , 
-                                style: TextStyle(fontSize: 35.0,decoration: TextDecoration.none,color: Colors.white,
-                                )),
-                              );
+                                 child: Padding(
+                                   padding: EdgeInsets.all(25.0),
+                                  child: Text(finalContent, 
+                                  style: TextStyle(
+                                    fontSize: 35.0,
+                                    decoration: TextDecoration.none,
+                                    color: Colors.white,
+                                    
+                                  )), 
+                                  
+                              ),
+                               );
                           },
                          );
                        } else if(snapshot.hasError){
