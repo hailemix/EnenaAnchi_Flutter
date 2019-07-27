@@ -10,9 +10,11 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return CupertinoApp(
+      theme: CupertinoThemeData(
+        primaryColor: Colors.blue,
+        textTheme: CupertinoTextThemeData(textStyle: TextStyle(fontFamily: 'Ethiopia Jiret'))
+       
       ),
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
@@ -102,7 +104,8 @@ class MyHomePageState extends State<MyHomePage> {
                                 ),
                               child: Center(
                                 child: Text(finalContent , 
-                                style: TextStyle(fontSize: 25.0,decoration: TextDecoration.none,color: Colors.white)),
+                                style: TextStyle(fontSize: 35.0,decoration: TextDecoration.none,color: Colors.white,
+                                )),
                               ),
                               
                               ),
