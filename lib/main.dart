@@ -34,6 +34,7 @@ class MyHomePageState extends State<MyHomePage> {
     List<BottomNavigationBarItem> bottomIcons;
     List containerColor = [Colors.teal[400],Colors.blueGrey,Colors.brown[300],Colors.white];
     var finalContent = '';
+
   
 
      @override
@@ -50,8 +51,7 @@ class MyHomePageState extends State<MyHomePage> {
    
       @override
   Widget build(BuildContext context) {
-
- 
+  
    
     return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
@@ -63,17 +63,30 @@ class MyHomePageState extends State<MyHomePage> {
       ),
        tabBuilder: (BuildContext context, int tabPosition){
          
+           
          return CupertinoTabView(
            builder: (BuildContext context){   
               
-             return Container(
-               color: containerColor[tabPosition],
+             return Stack(
+              alignment: Alignment.center,
+               children: <Widget>[
+                 Container(
+                   width: 350,
+                   height: 500,
+               decoration: BoxDecoration(
+                 color: containerColor[tabPosition],
+                 border: Border.all(color: Colors.white,style: BorderStyle.solid),
+                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                 shape: BoxShape.rectangle
+                 ),
+              
           child: FutureBuilder<JsonContent>(
               future: loadContent(),
               builder: (context, snapshot) {
                        if(snapshot.hasData){
                          return PageView.builder(
-                              scrollDirection: Axis.horizontal,     
+                              scrollDirection: Axis.horizontal,    
+                               
                           itemBuilder: (context, swipePagePosition){
                            
                           switch(tabPosition){
@@ -89,39 +102,23 @@ class MyHomePageState extends State<MyHomePage> {
                             case 3:
                             return  AboutUs();
                   
-                          }
-                          
-                            return Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: Container(
-                                width: 250,
-                                height: 250,
-                                decoration: BoxDecoration(
-                                 shape: BoxShape.rectangle,
-                                 borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                                 border: Border.all(style: BorderStyle.solid,color: Colors.white)
-                              
-                                ),
-                              child: Center(
+                          }  
+                            return 
+                               Center(
                                 child: Text(finalContent , 
                                 style: TextStyle(fontSize: 35.0,decoration: TextDecoration.none,color: Colors.white,
                                 )),
-                              ),
-                              
-                              ),
-                            );
+                              );
                           },
                          );
                        } else if(snapshot.hasError){
                          return Center(child: Text("${snapshot.error}"));
                        } 
-                       return Center(child: CircularProgressIndicator());
-       
+                       return Center(child: CircularProgressIndicator());     
               }
-            
-              
-              
-              ));
+   ))
+               ],
+             );
            },
          );
        },
