@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return CupertinoApp(
       theme: CupertinoThemeData(
         primaryColor: Colors.blue,
-        textTheme: CupertinoTextThemeData(textStyle: TextStyle(fontFamily: 'Ethiopia Jiret'))
+        textTheme: CupertinoTextThemeData(textStyle: TextStyle(fontFamily: 'Nyala'))
        
       ),
       home: MyHomePage(),
@@ -57,9 +57,8 @@ class MyHomePageState extends State<MyHomePage> {
       tabBar: CupertinoTabBar(
         items: bottomIcons,
         onTap: (int tappedPage){
-           
+   
         },
-  
       ),
        tabBuilder: (BuildContext context, int tabPosition){
          

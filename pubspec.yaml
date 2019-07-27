@@ -58,9 +58,9 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
   fonts:
-   - family: Ethiopia Jiret
+   - family: Nyala
      fonts:
-       - asset: fonts/ethiopia-jiret.ttf
+       - asset: fonts/nyala.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
