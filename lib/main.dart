@@ -1,8 +1,8 @@
-
 import 'package:enena_anchi/about_us.dart';
 import 'package:enena_anchi/json_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 
 void main() => runApp(MyApp());
@@ -34,39 +34,34 @@ class MyHomePageState extends State<MyHomePage> {
     List<BottomNavigationBarItem> bottomIcons;
     List containerColor = [Colors.teal[500],Colors.blueGrey,Colors.brown[300],Colors.white];
     var finalContent = '';
-
-  
-
+   
      @override
   void initState() {
     super.initState();
  
     bottomIcons = [
-     BottomNavigationBarItem(title: Text('Love'),icon: Icon(Icons.language)),
+     BottomNavigationBarItem(title: Text('Love'),icon: Icon(Icons.people)),
      BottomNavigationBarItem(title: Text('Balads'),icon: Icon(Icons.satellite)),
      BottomNavigationBarItem(title: Text('Sad'),icon: Icon(Icons.face)),
      BottomNavigationBarItem(title: Text('About Us'),icon: Icon(Icons.album)),
      ];
   }
-   
+
       @override
-  Widget build(BuildContext context) {
-  
-   
+   build(BuildContext context) {
     return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(
+      tabBar: CupertinoTabBar(      
         items: bottomIcons,
         onTap: (int tappedPage){
-   
+         
+          //...
+           
         },
       ),
-       tabBuilder: (BuildContext context, int tabPosition){
-         
-           
+       tabBuilder: (BuildContext context, int tabPosition){          
          return CupertinoTabView(
-           builder: (BuildContext context){   
-              
-             return Stack(
+           builder: (BuildContext context){               
+            return Stack(
               alignment: Alignment.center,
                children: <Widget>[
                  Container(
@@ -128,14 +123,16 @@ class MyHomePageState extends State<MyHomePage> {
      mainAxisAlignment: MainAxisAlignment.end,
      children: <Widget>[
        Padding(
-         padding: const EdgeInsets.only(right: 60,bottom: 110),
+         padding: const EdgeInsets.only(right: 40,bottom: 110),
          child: Row(
            crossAxisAlignment: CrossAxisAlignment.end,
            mainAxisAlignment: MainAxisAlignment.end,
            children: <Widget>[
-            CupertinoButton(child: Icon(CupertinoIcons.share,color: Colors.white,size: 45.0,),onPressed: (){
-              // TODO
-            },)
+            CupertinoButton(
+              child: Icon(CupertinoIcons.share, color: Colors.white,size: 45.0,),
+            onPressed: (){
+              Share.share(finalContent,subject: 'ፍቅር');
+            },),
            ],
          ),
        ),
@@ -145,9 +142,7 @@ class MyHomePageState extends State<MyHomePage> {
              );
            },
          );
-       },
-       
-       
+       },      
     );
 
   }
