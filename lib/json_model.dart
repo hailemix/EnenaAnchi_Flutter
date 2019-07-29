@@ -10,9 +10,9 @@ class JsonContent {
 
   factory JsonContent.fromJson(Map<String, dynamic> parsedJson){
 
- List<String> contentOneData = parsedJson['contentOne'].cast<String>();
- List<String> contentTwoData = parsedJson['contentTwo'].cast<String>();
- List<String> contentThreeData = parsedJson['contentThree'].cast<String>();
+ List<String> contentOneData = parsedJson['forHer'].cast<String>();
+ List<String> contentTwoData = parsedJson['forHim'].cast<String>();
+ List<String> contentThreeData = parsedJson['mixed'].cast<String>();
      return JsonContent(
        contentOne: contentOneData,
        contentTwo: contentTwoData,
