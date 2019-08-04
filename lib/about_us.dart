@@ -35,8 +35,8 @@ class FancyBackgroundApp extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                myTextWidget('Developer',40.0),
-                myTextWidget('AFC Ethiopia', 30.0),
+                myTextWidget('ዴቨሎፐር',40.0),
+                myTextWidget('ኤ.ኤፍ.ሲ ኢትዮጲያ', 30.0),
                 myTextWidget('hailemix2@gmail.com', 20.0)
               ],
             ),
@@ -53,7 +53,7 @@ class FancyBackgroundApp extends StatelessWidget {
       padding: const EdgeInsets.all(2.0),
       child: Text(
         child,
-        style: TextStyle(fontSize:myFontSize,color: Colors.white),
+        style: TextStyle(fontSize:myFontSize,color: Colors.white,fontFamily: 'Nyala'),
       ),
     ),
   );
@@ -65,7 +65,6 @@ class FancyBackgroundApp extends StatelessWidget {
         ),
       );
 
-   
 }
 
 class AnimatedWave extends StatelessWidget {

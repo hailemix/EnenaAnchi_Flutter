@@ -40,10 +40,10 @@ class MyHomePageState extends State<MyHomePage> {
     super.initState();
  
     bottomIcons = [
-     BottomNavigationBarItem(title: Text('Love'),icon: Icon(Icons.people)),
-     BottomNavigationBarItem(title: Text('Balads'),icon: Icon(Icons.satellite)),
-     BottomNavigationBarItem(title: Text('Sad'),icon: Icon(Icons.face)),
-     BottomNavigationBarItem(title: Text('About Us'),icon: Icon(Icons.album)),
+     BottomNavigationBarItem(title: Text('ለአንቺ'),icon: Icon(Icons.people)),
+     BottomNavigationBarItem(title: Text('ለአንተ'),icon: Icon(Icons.satellite)),
+     BottomNavigationBarItem(title: Text('ቅመሞች'),icon: Icon(Icons.face)),
+     BottomNavigationBarItem(title: Text('ስለእኛ'),icon: Icon(Icons.album)),
      ];
   }
 
