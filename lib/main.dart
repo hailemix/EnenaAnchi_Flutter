@@ -40,10 +40,10 @@ class MyHomePageState extends State<MyHomePage> {
     super.initState();
  
     bottomIcons = [
-     BottomNavigationBarItem(title: Text('ለአንቺ'),icon: Icon(Icons.people)),
-     BottomNavigationBarItem(title: Text('ለአንተ'),icon: Icon(Icons.satellite)),
-     BottomNavigationBarItem(title: Text('ቅመሞች'),icon: Icon(Icons.face)),
-     BottomNavigationBarItem(title: Text('ስለእኛ'),icon: Icon(Icons.album)),
+     BottomNavigationBarItem(title: Text('ለአንቺ'),icon: Icon(Icons.face)),
+     BottomNavigationBarItem(title: Text('ለአንተ'),icon: Icon(Icons.mood)),
+     BottomNavigationBarItem(title: Text('ፍቅር'),icon: Icon(Icons.favorite_border),activeIcon: Icon(Icons.favorite_border,color: Colors.red)),
+     BottomNavigationBarItem(title: Text('ስለእኛ'),icon: Icon(Icons.supervised_user_circle)),
      ];
   }
 
@@ -61,7 +61,7 @@ class MyHomePageState extends State<MyHomePage> {
        tabBuilder: (BuildContext context, int tabPosition){          
          return CupertinoTabView(
            builder: (BuildContext context){               
-            return Stack(
+            return  tabPosition < 3 ? Stack(
               alignment: Alignment.center,
                children: <Widget>[
                  Container(
@@ -92,9 +92,7 @@ class MyHomePageState extends State<MyHomePage> {
                             break;
                             case 2:
                             finalContent = snapshot.data.contentThree[swipePagePosition];
-                            break;
-                            case 3:
-                            return  AboutUs();
+
                   
                           }  
                             return 
@@ -119,7 +117,7 @@ class MyHomePageState extends State<MyHomePage> {
                        return Center(child: CircularProgressIndicator());     
               }
    )),
-   tabPosition != 3 ? Column(
+                 Column(
      mainAxisAlignment: MainAxisAlignment.end,
      children: <Widget>[
        Padding(
@@ -137,9 +135,9 @@ class MyHomePageState extends State<MyHomePage> {
          ),
        ),
      ],
-   ) : Container(),
+   )
                ],
-             );
+             ) : AboutUs();
            },
          );
        },      

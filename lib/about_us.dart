@@ -35,8 +35,8 @@ class FancyBackgroundApp extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                myTextWidget('ዴቨሎፐር',40.0),
-                myTextWidget('ኤ.ኤፍ.ሲ ኢትዮጲያ', 30.0),
+                myTextWidget('ዲቨሎፐር',40.0),
+                myTextWidget('ኤ.ኤፍ.ሲ ኢትዮጲያ', 20.0),
                 myTextWidget('hailemix2@gmail.com', 20.0)
               ],
             ),
