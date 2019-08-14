@@ -1,5 +1,6 @@
 import 'package:enena_anchi/about_us.dart';
 import 'package:enena_anchi/json_model.dart';
+import 'package:enena_anchi/animation_class.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
@@ -29,12 +30,16 @@ class MyHomePage extends StatefulWidget {
   MyHomePageState createState() => MyHomePageState();
 }
 
-class MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
  
     List<BottomNavigationBarItem> bottomIcons;
     List containerColor = [Colors.teal[500],Colors.blueGrey,Colors.brown[300],Colors.white];
     var finalContent = '';
-   
+    Animation<double> animation;
+    AnimationController controller;
+
+
+
      @override
   void initState() {
     super.initState();
@@ -45,17 +50,29 @@ class MyHomePageState extends State<MyHomePage> {
      BottomNavigationBarItem(title: Text('ፍቅር'),icon: Icon(Icons.favorite_border),activeIcon: Icon(Icons.favorite_border,color: Colors.red)),
      BottomNavigationBarItem(title: Text('ስለእኛ'),icon: Icon(Icons.supervised_user_circle)),
      ];
+    controller = AnimationController(vsync: this,duration: Duration(seconds: 1));
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    ..addStatusListener((status){
+
+    });
+    controller.forward();
+     }
+
+     @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
   }
+
+
 
       @override
    build(BuildContext context) {
     return CupertinoTabScaffold(
-      tabBar: CupertinoTabBar(      
+      tabBar: CupertinoTabBar(
         items: bottomIcons,
         onTap: (int tappedPage){
-         
-          //...
-           
+
         },
       ),
        tabBuilder: (BuildContext context, int tabPosition){          
@@ -63,81 +80,73 @@ class MyHomePageState extends State<MyHomePage> {
            builder: (BuildContext context){               
             return  tabPosition < 3 ? Stack(
               alignment: Alignment.center,
-               children: <Widget>[
-                 Container(
-                   width: 350,
-                   height: 550,
-               decoration: BoxDecoration(
-                 color: containerColor[tabPosition],
-                 border: Border.all(color: Colors.white,style: BorderStyle.solid),
-                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                 shape: BoxShape.rectangle
-                 ),
-              
-          child: FutureBuilder<JsonContent>(
-              future: loadContent(),
-              builder: (context, snapshot) {
-                       if(snapshot.hasData){
-                         return PageView.builder(
-                              scrollDirection: Axis.horizontal,    
-                               
-                          itemBuilder: (context, swipePagePosition){
-                           
-                          switch(tabPosition){
-                            case 0:
-                            finalContent = snapshot.data.contentOne[swipePagePosition];
-                            break;
-                            case 1:
-                            finalContent = snapshot.data.contentTwo[swipePagePosition];
-                            break;
-                            case 2:
-                            finalContent = snapshot.data.contentThree[swipePagePosition];
+              children: <Widget>[
+                ContainerWidget(
+                  animation: animation,
+                  zColor: containerColor[tabPosition],
+                  theContainer:FutureBuilder<JsonContent>(
+                      future: loadContent(),
+                      builder: (context, snapshot) {
+                        if(snapshot.hasData){
+                          return PageView.builder(
+                            scrollDirection: Axis.horizontal,
 
-                  
-                          }  
-                            return 
-                               Center(
-                                 child: Padding(
-                                   padding: EdgeInsets.all(25.0),
-                                  child: Text(finalContent, 
-                                  style: TextStyle(
-                                    fontSize: 35.0,
-                                    decoration: TextDecoration.none,
-                                    color: Colors.white,
-                                    
-                                  )), 
-                                  
-                              ),
-                               );
-                          },
-                         );
-                       } else if(snapshot.hasError){
-                         return Center(child: Text("${snapshot.error}"));
-                       } 
-                       return Center(child: CircularProgressIndicator());     
-              }
-   )),
-                 Column(
-     mainAxisAlignment: MainAxisAlignment.end,
-     children: <Widget>[
-       Padding(
-         padding: const EdgeInsets.only(right: 40,bottom: 110),
-         child: Row(
-           crossAxisAlignment: CrossAxisAlignment.end,
-           mainAxisAlignment: MainAxisAlignment.end,
-           children: <Widget>[
-            CupertinoButton(
-              child: Icon(CupertinoIcons.share, color: Colors.white,size: 45.0,),
-            onPressed: (){
-              Share.share(finalContent,subject: 'ፍቅር');
-            },),
-           ],
-         ),
-       ),
-     ],
-   )
-               ],
-             ) : AboutUs();
+                            itemBuilder: (context, swipePagePosition){
+
+                              switch(tabPosition){
+                                case 0:
+                                  finalContent = snapshot.data.contentOne[swipePagePosition];
+                                  break;
+                                case 1:
+                                  finalContent = snapshot.data.contentTwo[swipePagePosition];
+                                  break;
+                                case 2:
+                                  finalContent = snapshot.data.contentThree[swipePagePosition];
+
+
+                              }
+                              return
+                                Center(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(25.0),
+                                    child: Text(
+                                        finalContent,
+                                        style: TextStyle(
+                                          fontSize: 35.0,
+                                          decoration: TextDecoration.none,
+                                          color:Colors.white,
+                                        )),
+                                  ),
+                                );
+                            },
+                          );
+                        } else if(snapshot.hasError){
+                          return Center(child: Text("${snapshot.error}"));
+                        }
+                        return Center(child: CircularProgressIndicator());
+                      }
+                  ) ,),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 40,bottom: 110),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          CupertinoButton(
+                            child: Icon(CupertinoIcons.share, color: Colors.white,size: 45.0,),
+                            onPressed: (){
+                              Share.share(finalContent,subject: 'ፍቅር');
+                            },),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ) : AboutUs();
            },
          );
        },      
