@@ -24,22 +24,34 @@ class FancyBackgroundApp extends StatelessWidget {
         )),
         Center(
           child:Container(
-          width: 250,
-          height: 250,
+          width: 260,
+          height: 180,
           decoration: BoxDecoration(
             
             border: Border.all(style: BorderStyle.solid,color: Colors.white),
             shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(15.0),bottomRight: Radius.circular(15.0))
+            borderRadius: BorderRadius.all(Radius.circular(15.0))
             ) ,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                myTextWidget('ዲቨሎፐር',40.0),
-                myTextWidget('ኤ.ኤፍ.ሲ ኢትዮጲያ', 20.0),
-                myTextWidget('hailemix2@gmail.com', 20.0)
-              ],
+          child:Center(
+            child: Container(
+              width: 250,
+              height: 170,
+              decoration: BoxDecoration(
+
+                  border: Border.all(style: BorderStyle.solid,color: Colors.white),
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))
+              ) ,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  myTextWidget('ዲቨሎፐር',40.0),
+                  myTextWidget('ኤ.ኤፍ.ሲ ኢትዮጲያ', 20.0),
+                  myTextWidget('hailemix2@gmail.com', 20.0)
+                ],
+              ),
             ),
+          )
           ),
         ),
         ]

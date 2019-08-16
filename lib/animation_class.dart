@@ -30,7 +30,7 @@ class ContainerWidget extends AnimatedWidget{
             borderRadius: BorderRadius.all(Radius.circular(15.0)),
             shape: BoxShape.rectangle
         ),
-        child:theContainer ,
+        child:theContainer,
       ),
     );
   }
