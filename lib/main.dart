@@ -70,6 +70,13 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
   }
 
 
+  void showInterstitialAd(int pageNumber){
+
+       if(pageNumber % 3 == 0){
+         print('Interstitial ad $pageNumber');
+       }
+
+  }
 
       @override
    build(BuildContext context) {
@@ -77,12 +84,13 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
       tabBar: CupertinoTabBar(
         items: bottomIcons,
         onTap: (int tappedPage){
-
+          print('Tapped!');
+         // TODO
         },
       ),
        tabBuilder: (BuildContext context, int tabPosition){          
          return CupertinoTabView(
-           builder: (BuildContext context){               
+           builder: (BuildContext context){
             return  tabPosition < 3 ? Stack(
               alignment: Alignment.center,
               children: <Widget>[
@@ -95,6 +103,7 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
                         if(snapshot.hasData){
                           return PageView.builder(
                             scrollDirection: Axis.horizontal,
+                            onPageChanged: showInterstitialAd,
 
                             itemBuilder: (context, swipePagePosition){
 
@@ -152,6 +161,7 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
               ],
             ) : AboutUs();
            },
+
          );
        },      
     );
