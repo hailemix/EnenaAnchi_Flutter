@@ -30,7 +30,7 @@ class FancyBackgroundApp extends StatelessWidget {
             
             border: Border.all(style: BorderStyle.solid,color: Colors.white),
             shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(Radius.circular(15.0))
+            borderRadius: BorderRadius.all(Radius.circular(10.0))
             ) ,
           child:Center(
             child: Container(
@@ -40,7 +40,7 @@ class FancyBackgroundApp extends StatelessWidget {
 
                   border: Border.all(style: BorderStyle.solid,color: Colors.white),
                   shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))
+                  borderRadius: BorderRadius.all(Radius.circular(7.0))
               ) ,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

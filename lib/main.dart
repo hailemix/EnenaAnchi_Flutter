@@ -33,10 +33,11 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
  
     List<BottomNavigationBarItem> bottomIcons;
-    List containerColor = [Colors.teal[500],Colors.blueGrey,Colors.brown[300],Colors.white];
+    List containerColor = [Colors.teal[700],Colors.blueGrey[600],Colors.brown[400],Colors.white];
     var finalContent = '';
     Animation<double> animation;
     AnimationController controller;
+    bool animationIsCompleted = false;
 
 
 
@@ -50,10 +51,14 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
      BottomNavigationBarItem(title: Text('ፍቅር'),icon: Icon(Icons.favorite_border),activeIcon: Icon(Icons.favorite_border,color: Colors.red)),
      BottomNavigationBarItem(title: Text('ስለእኛ'),icon: Icon(Icons.supervised_user_circle)),
      ];
-    controller = AnimationController(vsync: this,duration: Duration(seconds: 1));
-    animation = CurvedAnimation(parent: controller, curve: Curves.easeIn)
+    controller = AnimationController(vsync: this,duration: Duration(milliseconds: 1800));
+    animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut)
     ..addStatusListener((status){
-
+ if ( status == AnimationStatus.completed){
+   setState(() {
+     animationIsCompleted = true;
+   });
+ }
     });
     controller.forward();
      }
@@ -84,7 +89,7 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
                 ContainerWidget(
                   animation: animation,
                   zColor: containerColor[tabPosition],
-                  theContainer:FutureBuilder<JsonContent>(
+                  theContainer: animationIsCompleted ? FutureBuilder<JsonContent>(
                       future: loadContent(),
                       builder: (context, snapshot) {
                         if(snapshot.hasData){
@@ -102,7 +107,6 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
                                   break;
                                 case 2:
                                   finalContent = snapshot.data.contentThree[swipePagePosition];
-
 
                               }
                               return
@@ -125,7 +129,7 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
                         }
                         return Center(child: CircularProgressIndicator());
                       }
-                  ) ,),
+                  ) : Text(''),),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
@@ -153,7 +157,7 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
     );
 
   }
- 
+
 }
 
 
