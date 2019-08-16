@@ -71,11 +71,10 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
 
 
   void showInterstitialAd(int pageNumber){
-
-       if(pageNumber % 3 == 0){
+       if (pageNumber % 3 == 0) {
          print('Interstitial ad $pageNumber');
+         //TODO Replace with Interstitial Ad.
        }
-
   }
 
       @override
