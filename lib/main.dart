@@ -30,15 +30,17 @@ class MyHomePage extends StatefulWidget {
   MyHomePageState createState() => MyHomePageState();
 }
 
-class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
+class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
  
     List<BottomNavigationBarItem> bottomIcons;
     List containerColor = [Colors.teal[700],Colors.blueGrey[600],Colors.brown[400],Colors.white];
     var finalContent = '';
-    Animation<double> animation;
-    AnimationController controller;
+    Animation<double> startAnimation;
+    AnimationController startAnimationController;
     bool animationIsCompleted = false;
-
+    bool isTapped = false;
+    Animation<double> tapAnimation;
+    AnimationController tapController;
 
 
      @override
@@ -51,24 +53,46 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
      BottomNavigationBarItem(title: Text('ፍቅር'),icon: Icon(Icons.favorite_border),activeIcon: Icon(Icons.favorite_border,color: Colors.red)),
      BottomNavigationBarItem(title: Text('ስለእኛ'),icon: Icon(Icons.supervised_user_circle)),
      ];
-    controller = AnimationController(vsync: this,duration: Duration(milliseconds: 1800));
-    animation = CurvedAnimation(parent: controller, curve: Curves.bounceOut)
-    ..addStatusListener((status){
- if ( status == AnimationStatus.completed){
-   setState(() {
-     animationIsCompleted = true;
-   });
- }
-    });
-    controller.forward();
+    startAnimationController = AnimationController(vsync: this,duration: Duration(milliseconds: 1800));
+    tapController = AnimationController(vsync: this, duration: Duration(milliseconds: 800));
+
+    startAnimation = CurvedAnimation(parent: startAnimationController, curve: Curves.bounceOut);
+    tapAnimation = CurvedAnimation(parent: tapController,curve: Curves.ease);
+
+    startAnimationController.forward();
+    startAnimationSequence();
+    tapAnimationSequence();
      }
+
+
 
      @override
   void dispose() {
-    controller.dispose();
+    startAnimationController.dispose();
+    tapController.dispose();
     super.dispose();
   }
 
+   startAnimationSequence(){
+      selectAnimation(startAnimation);
+  }
+  tapAnimationSequence(){
+    selectAnimation(tapAnimation);
+  }
+
+    bool selectAnimation(Animation<double> animType){
+
+      animType.addStatusListener((status){
+        setState(() {
+          if (status == AnimationStatus.completed) {
+            animationIsCompleted = true;
+          } else {
+            animationIsCompleted = false;
+          }
+        });
+      });
+      return animationIsCompleted;
+    }
 
   void showInterstitialAd(int pageNumber){
        if (pageNumber % 3 == 0) {
@@ -83,20 +107,26 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
       tabBar: CupertinoTabBar(
         items: bottomIcons,
         onTap: (int tappedPage){
-          print('Tapped!');
-         // TODO
+          if (tappedPage < 3) {
+            isTapped = true;
+            tapController.forward(from: 0.0).whenComplete(tapAnimationSequence);
+
+          }
         },
+
       ),
-       tabBuilder: (BuildContext context, int tabPosition){          
+       tabBuilder: (BuildContext context, int tabPosition){
+
          return CupertinoTabView(
            builder: (BuildContext context){
             return  tabPosition < 3 ? Stack(
               alignment: Alignment.center,
               children: <Widget>[
                 ContainerWidget(
-                  animation: animation,
+                  animation: isTapped ? tapAnimation: startAnimation,
                   zColor: containerColor[tabPosition],
-                  theContainer: animationIsCompleted ? FutureBuilder<JsonContent>(
+                  theContainer: animationIsCompleted ?
+                  FutureBuilder<JsonContent>(
                       future: loadContent(),
                       builder: (context, snapshot) {
                         if(snapshot.hasData){
@@ -135,7 +165,7 @@ class MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMi
                         } else if(snapshot.hasError){
                           return Center(child: Text("${snapshot.error}"));
                         }
-                        return Center(child: CircularProgressIndicator());
+                        return Center(child: CircularProgressIndicator(backgroundColor: CupertinoColors.activeOrange,));
                       }
                   ) : Text(''),),
                 Column(
