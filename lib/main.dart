@@ -34,13 +34,14 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
  
     List<BottomNavigationBarItem> bottomIcons;
     List containerColor = [Colors.teal[700],Colors.blueGrey[600],Colors.brown[400],Colors.white];
-    var finalContent = '';
     Animation<double> startAnimation;
+    Animation<double> tapAnimation;
     AnimationController startAnimationController;
+    AnimationController tapController;
     bool animationIsCompleted = false;
     bool isTapped = false;
-    Animation<double> tapAnimation;
-    AnimationController tapController;
+    String finalContent = '';
+
 
 
      @override
@@ -55,16 +56,12 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
      ];
     startAnimationController = AnimationController(vsync: this,duration: Duration(milliseconds: 1800));
     tapController = AnimationController(vsync: this, duration: Duration(milliseconds: 800));
-
     startAnimation = CurvedAnimation(parent: startAnimationController, curve: Curves.bounceOut);
     tapAnimation = CurvedAnimation(parent: tapController,curve: Curves.ease);
-
     startAnimationController.forward();
-    startAnimationSequence();
-    tapAnimationSequence();
+    selectAnimation(startAnimation);
+    selectAnimation(tapAnimation);
      }
-
-
 
      @override
   void dispose() {
@@ -73,14 +70,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-   startAnimationSequence(){
-      selectAnimation(startAnimation);
-  }
-  tapAnimationSequence(){
-    selectAnimation(tapAnimation);
-  }
-
-    bool selectAnimation(Animation<double> animType){
+    dynamic selectAnimation(Animation<double> animType){
 
       animType.addStatusListener((status){
         setState(() {
@@ -109,7 +99,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         onTap: (int tappedPage){
           if (tappedPage < 3) {
             isTapped = true;
-            tapController.forward(from: 0.0).whenComplete(tapAnimationSequence);
+            tapController.forward(from: 0.0).whenComplete(selectAnimation(tapAnimation));
 
           }
         },
