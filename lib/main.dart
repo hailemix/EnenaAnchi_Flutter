@@ -70,7 +70,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     super.dispose();
   }
 
-    dynamic selectAnimation(Animation<double> animType){
+     selectAnimation(Animation<double> animType){
 
       animType.addStatusListener((status){
         setState(() {
@@ -81,7 +81,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           }
         });
       });
-      return animationIsCompleted;
+
     }
 
   void showInterstitialAd(int pageNumber){

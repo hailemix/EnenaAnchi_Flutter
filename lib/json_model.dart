@@ -27,7 +27,7 @@ return await rootBundle.loadString('jsonStore/enenaAnchi.json');
 }
 
 Future<JsonContent> loadContent() async {
-   await wait(400);
+   await wait(200);
   String jsonString = await _loadContents();
   final jsonResponse = json.decode(jsonString);
   return JsonContent.fromJson(jsonResponse);
@@ -35,7 +35,7 @@ Future<JsonContent> loadContent() async {
 }
 
 Future wait(int millisecond) {
-  return Future.delayed(Duration(milliseconds: 400),() => {});
+  return Future.delayed(Duration(milliseconds: millisecond),() => {});
 }
 
 
