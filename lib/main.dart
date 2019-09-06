@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
     return CupertinoApp(
       theme: CupertinoThemeData(
         primaryColor: Colors.blue,
-        textTheme: CupertinoTextThemeData(textStyle: TextStyle(fontFamily: 'Nyala'))
-       
+        textTheme: CupertinoTextThemeData(
+          textStyle: TextStyle(fontFamily: 'Nyala'))     
       ),
       home: MyHomePage(),
       debugShowCheckedModeBanner: false,
@@ -24,7 +24,6 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
   
   @override
   MyHomePageState createState() => MyHomePageState();
@@ -41,8 +40,6 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     bool animationIsCompleted = false;
     bool isTapped = false;
     String finalContent = '';
-
-
 
      @override
   void initState() {
@@ -123,9 +120,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                           return PageView.builder(
                             scrollDirection: Axis.horizontal,
                             onPageChanged: showInterstitialAd,
-
                             itemBuilder: (context, swipePagePosition){
-
                               switch(tabPosition){
                                 case 0:
                                   finalContent = snapshot.data.contentOne[swipePagePosition];
@@ -135,7 +130,6 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   break;
                                 case 2:
                                   finalContent = snapshot.data.contentThree[swipePagePosition];
-
                               }
                               return
                                 Center(
@@ -153,7 +147,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             },
                           );
                         } else if(snapshot.hasError){
-                          return Center(child: Text("${snapshot.error}"));
+                          return Center(child: Text("Fetching data has an error.Details: ${snapshot.error}"));
                         }
                         return Center(child: CircularProgressIndicator(backgroundColor: CupertinoColors.activeOrange,));
                       }
