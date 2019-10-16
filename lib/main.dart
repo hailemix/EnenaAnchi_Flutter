@@ -109,7 +109,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
             return  tabPosition < 3 ? Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                ContainerWidget(
+                  ContainerWidget(
                   animation: isTapped ? tapAnimation: startAnimation,
                   zColor: containerColor[tabPosition],
                   theContainer: animationIsCompleted ?
@@ -149,14 +149,16 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         } else if(snapshot.hasError){
                           return Center(child: Text("Fetching data has an error.Details: ${snapshot.error}"));
                         }
-                        return Center(child: CircularProgressIndicator(backgroundColor: CupertinoColors.activeOrange,));
+                        return Center(child: RefreshProgressIndicator(backgroundColor: CupertinoColors.white));
                       }
-                  ) : Text(''),),
+                  ) :
+                  Text(''),
+                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(right: 40,bottom: 110),
+                      padding: const EdgeInsets.only(right: 40, bottom: 110),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.end,
