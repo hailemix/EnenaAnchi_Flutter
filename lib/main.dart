@@ -61,11 +61,13 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
      }
 
      @override
-  void dispose() {
+    void dispose() {
     startAnimationController.dispose();
     tapController.dispose();
     super.dispose();
   }
+
+
 
      selectAnimation(Animation<double> animType){
 
@@ -97,16 +99,15 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           if (tappedPage < 3) {
             isTapped = true;
             tapController.forward(from: 0.0).whenComplete(selectAnimation(tapAnimation));
-
           }
         },
-
       ),
        tabBuilder: (BuildContext context, int tabPosition){
 
          return CupertinoTabView(
            builder: (BuildContext context){
-            return  tabPosition < 3 ? Stack(
+            return  tabPosition < 3 ?
+            Stack(
               alignment: Alignment.center,
               children: <Widget>[
                   ContainerWidget(
@@ -121,6 +122,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                             scrollDirection: Axis.horizontal,
                             onPageChanged: showInterstitialAd,
                             itemBuilder: (context, swipePagePosition){
+
                               switch(tabPosition){
                                 case 0:
                                   finalContent = snapshot.data.contentOne[swipePagePosition];
@@ -145,6 +147,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                                   ),
                                 );
                             },
+
                           );
                         } else if(snapshot.hasError){
                           return Center(child: Text("Fetching data has an error.Details: ${snapshot.error}"));
@@ -154,7 +157,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   ) :
                   Text(''),
                 ),
-                Column(
+                  Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Padding(
