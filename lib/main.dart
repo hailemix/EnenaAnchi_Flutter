@@ -58,7 +58,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     tapAnimation = CurvedAnimation(parent: _tapController,curve: Curves.ease);
     _startAnimationController.forward();
     selectAnimation(startAnimation);
-    selectAnimation(tapAnimation);
+
      }
 
      @override
@@ -96,7 +96,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         onTap: (int tappedPage){
           if (tappedPage < 3) {
             isTapped = true;
-            _tapController.forward(from: 0.0).whenComplete(selectAnimation(tapAnimation));
+            _tapController.forward(from: 0.0);
+            selectAnimation(tapAnimation);
           }
         },
       ),
@@ -172,8 +173,30 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         ],
                       ),
                     ),
+
+                  ],
+                ),
+                /*
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15,left: 15,bottom: 65),
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.all(Radius.circular(5.0))
+                        ),
+                        child: Center(child: Text('Banner Ad'),),
+                      ),
+                    ),
                   ],
                 )
+
+                 */
+
               ],
             ) : AboutUs();
            },
