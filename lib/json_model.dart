@@ -27,14 +27,14 @@ return await rootBundle.loadString('jsonStore/enenaAnchi.json');
 }
 
 Future<JsonContent> loadContent() async {
-   await wait(200);
+   await _wait(200);
   String jsonString = await _loadContents();
   final jsonResponse = json.decode(jsonString);
   return JsonContent.fromJson(jsonResponse);
 
 }
 
-Future wait(int millisecond) {
+Future _wait(int millisecond) {
   return Future.delayed(Duration(milliseconds: millisecond),() => {});
 }
 
