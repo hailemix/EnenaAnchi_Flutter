@@ -45,20 +45,20 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
      @override
   void initState() {
     super.initState();
- 
+
     _bottomIcons = [
      BottomNavigationBarItem(title: Text('ለአንቺ'),icon: Icon(Icons.face)),
      BottomNavigationBarItem(title: Text('ለአንተ'),icon: Icon(Icons.mood)),
      BottomNavigationBarItem(title: Text('ፍቅር'),icon: Icon(Icons.favorite_border),activeIcon: Icon(Icons.favorite_border,color: Colors.red)),
      BottomNavigationBarItem(title: Text('ስለእኛ'),icon: Icon(Icons.supervised_user_circle)),
      ];
+
     _startAnimationController = AnimationController(vsync: this,duration: Duration(milliseconds: 1800));
     _tapController = AnimationController(vsync: this, duration: Duration(milliseconds: 800));
     startAnimation = CurvedAnimation(parent: _startAnimationController, curve: Curves.bounceOut);
     tapAnimation = CurvedAnimation(parent: _tapController,curve: Curves.ease);
     _startAnimationController.forward();
     selectAnimation(startAnimation);
-
      }
 
      @override
