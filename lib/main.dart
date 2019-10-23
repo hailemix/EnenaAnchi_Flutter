@@ -4,11 +4,18 @@ import 'package:enena_anchi/animation_class.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
+import 'package:flutter/services.dart';
 
 
-void main() => runApp(MyApp());
+void main() {
+ SystemChrome.setPreferredOrientations([
+  DeviceOrientation.portraitUp
+  ]).then((_){
+  runApp(RomanceApp());
+  });
+}
 
-class MyApp extends StatelessWidget {
+class RomanceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoApp(
