@@ -97,7 +97,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
       @override
    build(BuildContext context) {
-    return CupertinoTabScaffold(
+       return CupertinoTabScaffold(
       tabBar: CupertinoTabBar(
         items: _bottomIcons,
         onTap: (int tappedPage){
@@ -174,16 +174,19 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         children: <Widget>[
                           CupertinoButton(
                             child: Icon(CupertinoIcons.share, color: Colors.white,size: 45.0,),
-                            onPressed: (){
-                              Share.share(_finalContent,subject: 'ፍቅር');
-                            },),
+                            onPressed: () {
+                               SystemSound.play(SystemSoundType.click);
+                               Share.share(_finalContent,subject: 'ፍቅር');
+                            },
+                          ),
                         ],
                       ),
                     ),
 
                   ],
                 ),
-                /*
+                //
+             /*
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
 
@@ -194,16 +197,13 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                         height: 60,
                         decoration: BoxDecoration(
                           color: Colors.black,
-                          borderRadius: BorderRadius.all(Radius.circular(5.0))
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         ),
                         child: Center(child: Text('Banner Ad'),),
                       ),
                     ),
                   ],
-                )
-
-                 */
-
+                ) */
               ],
             ) : AboutUs();
            },
