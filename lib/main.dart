@@ -1,6 +1,7 @@
 import 'package:enena_anchi/about_us.dart';
 import 'package:enena_anchi/json_model.dart';
 import 'package:enena_anchi/animation_class.dart';
+import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
@@ -48,6 +49,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     bool animationIsCompleted = false;
     bool isTapped = false;
     String _finalContent = '';
+    InterstitialAd myInterstitial;
+    BannerAd myBanner;
 
      @override
   void initState() {
@@ -66,6 +69,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     tapAnimation = CurvedAnimation(parent: _tapController,curve: Curves.ease);
     _startAnimationController.forward();
     selectAnimation(startAnimation);
+    myInterstitial = InterstitialAd();
+    myBanner = BannerAd();
      }
 
      @override
@@ -90,6 +95,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   void showInterstitialAd(int pageNumber){
        if (pageNumber % 3 == 0) {
+
          print('Interstitial ad $pageNumber');
          //TODO Replace with Interstitial Ad.
        }
