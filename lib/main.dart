@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:flutter/services.dart';
 
-const String BANNER_AD_ID = "";
-const String INTERSTITIAL_AD_ID = "";
-const String ADMOB_APP_ID = "ca-app-pub-9156727777369518~1185879969";
-
+const String MY_APP_ID = "ca-app-pub-9156727777369518~1185879969";
+const String EMULATOR_DEVICE = "Pixel 2";
+const String REAL_DEVICE = "ASUS A006";
 void main() {
-  FirebaseAdMob.instance.initialize(appId: ADMOB_APP_ID );
+  FirebaseAdMob.instance.initialize(appId: MY_APP_ID);
+
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(RomanceApp());
@@ -54,24 +54,30 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   bool animationIsCompleted = false;
   bool isTapped = false;
   String _finalContent = '';
-
-  BannerAd _myBanner;
-  InterstitialAd _myInterstitial;
+  BannerAd _bannerAd;
+  InterstitialAd _interstitialAd;
   MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-      keywords: <String>['flutterio', 'enena anchi'],
-      contentUrl: 'https://flutter.io',
-      childDirected: false,
-      testDevices: <String>['Pixel 2 API 29', 'ASUS A006']);
-
-  BannerAd createBannerAd(){
+    keywords: <String>['enena anchi', 'amharic love quotes'],
+    contentUrl: 'httpe://flutter.io',
+    testDevices: <String>[EMULATOR_DEVICE, REAL_DEVICE],
+  );
+  BannerAd createBannerAd() {
     return BannerAd(
         adUnitId: BannerAd.testAdUnitId,
         size: AdSize.smartBanner,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
-        print("BannerAd event is $event");
-    });
+          print("BannerAd event is $event");
+        });
+  }
 
+  InterstitialAd createInterstitialAd() {
+    return InterstitialAd(
+        adUnitId: InterstitialAd.testAdUnitId,
+        targetingInfo: targetingInfo,
+        listener: (MobileAdEvent event) {
+          print("InterstitialAd event is $event");
+        });
   }
 
   @override
@@ -98,28 +104,19 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     tapAnimation = CurvedAnimation(parent: _tapController, curve: Curves.ease);
     _startAnimationController.forward();
     selectAnimation(startAnimation);
-
-    _myInterstitial = InterstitialAd(
-      adUnitId: InterstitialAd.testAdUnitId,
-      targetingInfo: targetingInfo,
-      listener: (MobileAdEvent event) {
-        print("InterstitialAd event is $event");
-      },
-    );
-    _myBanner = createBannerAd()
+    _bannerAd = createBannerAd()
       ..load()
       ..show(
-      anchorType: AnchorType.bottom,
-      anchorOffset: 60.0,
-      horizontalCenterOffset: 0.0,
-    );
+          anchorOffset: 60.0,
+          horizontalCenterOffset: 10.0,
+          anchorType: AnchorType.bottom);
   }
 
   @override
   void dispose() {
     _startAnimationController.dispose();
     _tapController.dispose();
-    _myBanner?.dispose();
+    _bannerAd?.dispose();
     super.dispose();
   }
 
@@ -136,127 +133,140 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   void showInterstitialAd(int pageNumber) {
-    if (pageNumber % 3 == 0 ) {
-      _myInterstitial
-        ..load()
-        ..show(
-          anchorType: AnchorType.bottom,
-          anchorOffset: 0.0,
-          horizontalCenterOffset: 0.0);
-      print('Interstitial Ad $pageNumber is shown');
-    }
+
+      _interstitialAd.load();
+      if (pageNumber % 3 == 0) {
+        _interstitialAd.show(
+            anchorType: AnchorType.bottom,
+            anchorOffset: 0.0,
+            horizontalCenterOffset: 0.0);
+      }
   }
 
   @override
   build(BuildContext context) {
-
     return CupertinoTabScaffold(
-          tabBar: CupertinoTabBar(
-            items: _bottomIcons,
-            onTap: (int tappedPage) {
-              if (tappedPage < 3) {
-                isTapped = true;
-                _tapController.forward(from: 0.0);
-                selectAnimation(tapAnimation);
-              }
-            },
-          ),
-          tabBuilder: (BuildContext context, int tabPosition) {
-            return CupertinoTabView(
-              builder: (BuildContext context) {
-                return tabPosition < 3
-                    ? Stack(
-                        alignment: Alignment.center,
-                        children: <Widget>[
-                          ContainerWidget(
-                            animation: isTapped ? tapAnimation : startAnimation,
-                            zColor: _containerColor[tabPosition],
-                            theContainer: animationIsCompleted
-                                ? FutureBuilder<JsonContent>(
-                                    future: loadContent(),
-                                    builder: (context, snapshot) {
-                                      if (snapshot.hasData) {
-                                        return PageView.builder(
-                                          scrollDirection: Axis.horizontal,
-                                          onPageChanged: showInterstitialAd,
-                                          itemBuilder:
-                                              (context, swipePagePosition) {
-                                            switch (tabPosition) {
-                                              case 0:
-                                                _finalContent =
-                                                    snapshot.data.contentOne[
-                                                        swipePagePosition];
-                                                break;
-                                              case 1:
-                                                _finalContent =
-                                                    snapshot.data.contentTwo[
-                                                        swipePagePosition];
-                                                break;
-                                              case 2:
-                                                _finalContent =
-                                                    snapshot.data.contentThree[
-                                                        swipePagePosition];
-                                            }
-                                            return Center(
-                                              child: Padding(
-                                                padding: EdgeInsets.all(25.0),
-                                                child: Text(_finalContent,
-                                                    style: TextStyle(
-                                                      fontSize: 35.0,
-                                                      decoration:
-                                                          TextDecoration.none,
-                                                      color: Colors.white,
-                                                    )),
-                                              ),
-                                            );
-                                          },
-                                        );
-                                      } else if (snapshot.hasError) {
+      tabBar: CupertinoTabBar(
+        items: _bottomIcons,
+        onTap: (int tappedPage) {
+          if (tappedPage < 3) {
+            isTapped = true;
+            _tapController.forward(from: 0.0);
+            selectAnimation(tapAnimation);
+          }
+        },
+      ),
+      tabBuilder: (BuildContext context, int tabPosition) {
+        return CupertinoTabView(
+          builder: (BuildContext context) {
+            return tabPosition < 3
+                ? Stack(
+                    alignment: Alignment.center,
+                    children: <Widget>[
+                      ContainerWidget(
+                        animation: isTapped ? tapAnimation : startAnimation,
+                        zColor: _containerColor[tabPosition],
+                        theContainer: animationIsCompleted
+                            ? FutureBuilder<JsonContent>(
+                                future: loadContent(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return PageView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      onPageChanged: showInterstitialAd,
+                                      itemBuilder:
+                                          (context, swipePagePosition) {
+                                        switch (tabPosition) {
+                                          case 0:
+                                            _finalContent = snapshot.data
+                                                .contentOne[swipePagePosition];
+                                            break;
+                                          case 1:
+                                            _finalContent = snapshot.data
+                                                .contentTwo[swipePagePosition];
+                                            break;
+                                          case 2:
+                                            _finalContent =
+                                                snapshot.data.contentThree[
+                                                    swipePagePosition];
+                                        }
                                         return Center(
-                                            child: Text(
-                                                "Fetching data has an error.Details: ${snapshot.error}"));
-                                      }
-                                      return Center(
-                                          child: RefreshProgressIndicator(
-                                              backgroundColor:
-                                                  CupertinoColors.white));
-                                    })
-                                : Text(''),
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 40, bottom: 110),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.end,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    CupertinoButton(
-                                      child: Icon(
-                                        CupertinoIcons.share,
-                                        color: Colors.white,
-                                        size: 45.0,
-                                      ),
-                                      onPressed: () {
-                                        SystemSound.play(SystemSoundType.click);
-                                        Share.share(_finalContent,
-                                            subject: 'ፍቅር');
+                                          child: Padding(
+                                            padding: EdgeInsets.all(25.0),
+                                            child: Text(_finalContent,
+                                                style: TextStyle(
+                                                  fontSize: 35.0,
+                                                  decoration:
+                                                      TextDecoration.none,
+                                                  color: Colors.white,
+                                                )),
+                                          ),
+                                        );
                                       },
-                                    ),
-                                  ],
+                                    );
+                                  } else if (snapshot.hasError) {
+                                    return Center(
+                                        child: Text(
+                                            "Fetching data has an error.Details: ${snapshot.error}"));
+                                  }
+                                  return Center(
+                                      child: RefreshProgressIndicator(
+                                          backgroundColor:
+                                              CupertinoColors.white));
+                                })
+                            : Text(''),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 40, bottom: 110),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                CupertinoButton(
+                                  child: Icon(
+                                    CupertinoIcons.share,
+                                    color: Colors.white,
+                                    size: 45.0,
+                                  ),
+                                  onPressed: () {
+                                    SystemSound.play(SystemSoundType.click);
+                                    Share.share(_finalContent, subject: 'ፍቅር');
+                                  },
                                 ),
-                              ),
-
-                            ],
+                              ],
+                            ),
                           ),
                         ],
-                      )
-                    : AboutUs();
-              },
-            );
+                      ),
+                      //
+                      /*
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15,left: 15,bottom: 65),
+                      child: Container(
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        ),
+                        child: Center(child: Text('Banner Ad'),),
+                      ),
+                    ),
+                  ],
+                ) */
+                    ],
+                  )
+                : AboutUs();
           },
         );
+      },
+    );
   }
 }
