@@ -8,8 +8,8 @@ import 'package:share/share.dart';
 import 'package:flutter/services.dart';
 
 const String MY_APP_ID = "ca-app-pub-9156727777369518~1185879969";
-const String bannerID = "";
-const String interstitialID = "";
+const String _bannerIdNumber = "ca-app-pub-9156727777369518/7886249173";
+const String _interstitialIdNumber = "ca-app-pub-9156727777369518/8020534016";
 const String EMULATOR_DEVICE = "Pixel 2";
 const String REAL_DEVICE = "ASUS A006";
 void main() {
@@ -66,7 +66,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   BannerAd createBannerAd() {
     return BannerAd(
         adUnitId: BannerAd.testAdUnitId,
-        size: AdSize.smartBanner,
+        //adUnitId:_bannerIdNumber,
+        size: AdSize.banner,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
           print("BannerAd event is $event");
@@ -93,6 +94,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
     _myInterstitial = InterstitialAd(
         adUnitId: InterstitialAd.testAdUnitId,
+       // adUnitId: _interstitialIdNumber,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
 
