@@ -13,6 +13,8 @@ const String _interstitialIdNumber = "ca-app-pub-9156727777369518/8020534016";
 const String EMULATOR_DEVICE = "Pixel 2";
 const String REAL_DEVICE = "ASUS A006";
 void main() {
+
+  WidgetsFlutterBinding.ensureInitialized();
   FirebaseAdMob.instance.initialize(appId: MY_APP_ID);
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
@@ -77,6 +79,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
 
     _startAnimationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1800));
     _tapController = AnimationController(vsync: this, duration: Duration(milliseconds: 800));
