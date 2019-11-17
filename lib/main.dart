@@ -76,9 +76,23 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         });
   }
 
+  InterstitialAd createInterstitialAd(){
+    return InterstitialAd(
+        adUnitId: InterstitialAd.testAdUnitId,
+        // adUnitId: _interstitialIdNumber,
+        targetingInfo: targetingInfo,
+        listener: (MobileAdEvent event) {
+           if(event == MobileAdEvent.failedToLoad || event == MobileAdEvent.closed) {
+             _myInterstitial.load();
+           }
+
+        });
+  }
+
   @override
   void initState() {
     super.initState();
+
 
 
     _startAnimationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1800));
@@ -88,20 +102,28 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _startAnimationController.forward();
     selectAnimation(startAnimation);
 
+
+    _bottomIcons = [
+      BottomNavigationBarItem(title: Text('ለአንቺ'), icon: Icon(Icons.face)),
+      BottomNavigationBarItem(title: Text('ለአንተ'), icon: Icon(Icons.mood)),
+      BottomNavigationBarItem(
+          title: Text('ፍቅር'),
+          icon: Icon(Icons.favorite_border),
+          activeIcon: Icon(Icons.favorite_border, color: Colors.red)),
+      BottomNavigationBarItem(
+          title: Text('ስለእኛ'), icon: Icon(Icons.supervised_user_circle)),
+    ];
+
+
     _bannerAd = createBannerAd()
       ..load()
       ..show(
-          anchorOffset: 60.0,
+          anchorOffset: 120.0,
           horizontalCenterOffset:0.0,
           anchorType: AnchorType.top);
 
-    _myInterstitial = InterstitialAd(
-        adUnitId: InterstitialAd.testAdUnitId,
-       // adUnitId: _interstitialIdNumber,
-        targetingInfo: targetingInfo,
-        listener: (MobileAdEvent event) {
 
-        });
+
   }
 
   @override
@@ -125,6 +147,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   }
 
   void showInterstitialAd(int pageNumber) {
+
+    _myInterstitial = createInterstitialAd();
     _myInterstitial.load();
 
     if (pageNumber % 3 == 0) {
@@ -139,16 +163,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     @override
     build(BuildContext context) {
 
-      _bottomIcons = [
-        BottomNavigationBarItem(title: Text('ለአንቺ'), icon: Icon(Icons.face)),
-        BottomNavigationBarItem(title: Text('ለአንተ'), icon: Icon(Icons.mood)),
-        BottomNavigationBarItem(
-            title: Text('ፍቅር'),
-            icon: Icon(Icons.favorite_border),
-            activeIcon: Icon(Icons.favorite_border, color: Colors.red)),
-        BottomNavigationBarItem(
-            title: Text('ስለእኛ'), icon: Icon(Icons.supervised_user_circle)),
-      ];
+      _myInterstitial = createInterstitialAd();
 
       return CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
