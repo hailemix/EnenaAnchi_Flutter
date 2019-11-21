@@ -8,8 +8,8 @@ import 'package:share/share.dart';
 import 'package:flutter/services.dart';
 
 const String MY_APP_ID = "ca-app-pub-9156727777369518~1185879969";
-const String _bannerIdNumber = "ca-app-pub-9156727777369518/7886249173";
-const String _interstitialIdNumber = "ca-app-pub-9156727777369518/8020534016";
+const String _BANNER = "ca-app-pub-9156727777369518/7886249173";
+const String _INTERSTITIAL = "ca-app-pub-9156727777369518/8020534016";
 const String EMULATOR_DEVICE = "Pixel 2";
 const String REAL_DEVICE = "ASUS A006";
 void main() {
@@ -53,7 +53,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   Animation<double> startAnimation;
   Animation<double> tapAnimation;
   AnimationController _startAnimationController;
-  AnimationController _tapController;
+  AnimationController _tapAnimationController;
   bool animationIsCompleted = false;
   bool isTapped = false;
   String _finalContent = '';
@@ -67,8 +67,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   BannerAd createBannerAd() {
     return BannerAd(
-        adUnitId: BannerAd.testAdUnitId,
-        //adUnitId:_bannerIdNumber,
+        //adUnitId: BannerAd.testAdUnitId,
+         adUnitId:_BANNER,
         size: AdSize.banner,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
@@ -78,14 +78,13 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   InterstitialAd createInterstitialAd(){
     return InterstitialAd(
-        adUnitId: InterstitialAd.testAdUnitId,
-        // adUnitId: _interstitialIdNumber,
+        //adUnitId: InterstitialAd.testAdUnitId,
+         adUnitId: _INTERSTITIAL,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
            if(event == MobileAdEvent.failedToLoad || event == MobileAdEvent.closed) {
              _myInterstitial.load();
            }
-
         });
   }
 
@@ -93,12 +92,10 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-
-
     _startAnimationController = AnimationController(vsync: this, duration: Duration(milliseconds: 1800));
-    _tapController = AnimationController(vsync: this, duration: Duration(milliseconds: 800));
+    _tapAnimationController = AnimationController(vsync: this, duration: Duration(milliseconds: 800));
     startAnimation = CurvedAnimation(parent: _startAnimationController, curve: Curves.bounceOut);
-    tapAnimation = CurvedAnimation(parent: _tapController, curve: Curves.ease);
+    tapAnimation = CurvedAnimation(parent: _tapAnimationController, curve: Curves.ease);
     _startAnimationController.forward();
     selectAnimation(startAnimation);
 
@@ -121,15 +118,12 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           anchorOffset: 120.0,
           horizontalCenterOffset:0.0,
           anchorType: AnchorType.top);
-
-
-
   }
 
   @override
   void dispose() {
     _startAnimationController.dispose();
-    _tapController.dispose();
+    _tapAnimationController.dispose();
     _bannerAd?.dispose();
     super.dispose();
   }
@@ -163,15 +157,13 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     @override
     build(BuildContext context) {
 
-      _myInterstitial = createInterstitialAd();
-
       return CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
           items: _bottomIcons,
           onTap: (int tappedPage) {
             if (tappedPage < 3) {
               isTapped = true;
-              _tapController.forward(from: 0.0);
+              _tapAnimationController.forward(from: 0.0);
               selectAnimation(tapAnimation);
             }
           },
