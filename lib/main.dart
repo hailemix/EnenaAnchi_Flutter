@@ -2,10 +2,12 @@ import 'package:enena_anchi/about_us.dart';
 import 'package:enena_anchi/json_model.dart';
 import 'package:enena_anchi/animation_class.dart';
 import 'package:firebase_admob/firebase_admob.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 import 'package:flutter/services.dart';
+import 'dart:io';
 
 const String MY_APP_ID = "ca-app-pub-9156727777369518~1185879969";
 const String _BANNER = "ca-app-pub-9156727777369518/7886249173";
@@ -59,6 +61,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   String _finalContent = '';
   BannerAd _bannerAd;
   InterstitialAd _myInterstitial;
+  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
     keywords: <String>['enena anchi', 'amharic love quotes','amharic love letters','love letter','amharic romantic quotes'],
     contentUrl: 'https://play.google.com/store/apps/dev?id=4732824418136294157&hl=en',
@@ -88,6 +91,35 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         });
   }
 
+  void firebaseCloudMessagingListeners(){
+     if(Platform.isIOS) iOSPermission();
+
+    _firebaseMessaging.getToken().then((token){
+      print(token);
+    });
+
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print('on message $message');
+
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print('on resume $message');
+      },
+      onLaunch: (Map<String, dynamic> message) async{
+        print('on launch $message');
+     }
+    );
+  }
+
+  void iOSPermission(){
+    _firebaseMessaging.requestNotificationPermissions(
+      IosNotificationSettings(sound: true, badge: true)
+    );
+    _firebaseMessaging.onIosSettingsRegistered.listen((IosNotificationSettings settings){
+      print("Settings registered: $settings");
+    });
+  }
   @override
   void initState() {
     super.initState();
@@ -98,7 +130,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     tapAnimation = CurvedAnimation(parent: _tapAnimationController, curve: Curves.ease);
     _startAnimationController.forward();
     selectAnimation(startAnimation);
-
+    firebaseCloudMessagingListeners();
 
     _bottomIcons = [
       BottomNavigationBarItem(title: Text('ለአንቺ'), icon: Icon(Icons.face)),
