@@ -67,8 +67,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   BannerAd createBannerAd() {
     return BannerAd(
-        //adUnitId: BannerAd.testAdUnitId,
-         adUnitId:_BANNER,
+        adUnitId: BannerAd.testAdUnitId,
+        // adUnitId:_BANNER,
         size: AdSize.banner,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
@@ -78,8 +78,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   InterstitialAd createInterstitialAd(){
     return InterstitialAd(
-        //adUnitId: InterstitialAd.testAdUnitId,
-         adUnitId: _INTERSTITIAL,
+        adUnitId: InterstitialAd.testAdUnitId,
+        // adUnitId: _INTERSTITIAL,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
            if(event == MobileAdEvent.failedToLoad || event == MobileAdEvent.closed) {
