@@ -58,7 +58,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   AnimationController _tapAnimationController;
   bool animationIsCompleted = false;
   bool isTapped = false;
-  String _finalContent = '';
+  String finalContent = '';
   BannerAd _bannerAd;
   InterstitialAd _myInterstitial;
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -203,97 +203,99 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         tabBuilder: (BuildContext context, int tabPosition) {
           return CupertinoTabView(
             builder: (BuildContext context) {
-              return tabPosition < 3
-                  ? Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  ContainerWidget(
-                    animation: isTapped ? tapAnimation : startAnimation,
-                    zColor: _containerColor[tabPosition],
-                    theContainer: animationIsCompleted
-                        ? FutureBuilder<JsonContent>(
-                        future: loadContent(),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return PageView.builder(
-                              scrollDirection: Axis.horizontal,
-                              onPageChanged: showInterstitialAd,
-                              itemBuilder:
-                                  (context, swipePagePosition) {
-                                switch (tabPosition) {
-                                  case 0:
-                                    _finalContent = snapshot.data
-                                        .contentOne[swipePagePosition];
-                                    break;
-                                  case 1:
-                                    _finalContent = snapshot.data
-                                        .contentTwo[swipePagePosition];
-                                    break;
-                                  case 2:
-                                    _finalContent =
-                                    snapshot.data.contentThree[
-                                    swipePagePosition];
-                                }
-                                return Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(25.0),
-                                    child: Text(_finalContent,
-                                        style: TextStyle(
-                                          fontSize: 35.0,
-                                          decoration:
-                                          TextDecoration.none,
-                                          color: Colors.white,
-                                        )),
-                                  ),
-                                );
-                              },
-                            );
-                          } else if (snapshot.hasError) {
-                            return Center(
-                                child: Text(
-                                    "Fetching data has an error.Details: ${snapshot
-                                        .error}"));
-                          }
-                          return Center(
-                              child: RefreshProgressIndicator(
-                                  backgroundColor:
-                                  CupertinoColors.white));
-                        })
-                        : Text(''),
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Padding(
-                        padding:
-                        const EdgeInsets.only(right: 40, bottom: 110),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            CupertinoButton(
-                              child: Icon(
-                                CupertinoIcons.share,
-                                color: Colors.white,
-                                size: 45.0,
-                              ),
-                              onPressed: () {
-                                SystemSound.play(SystemSoundType.click);
-                                Share.share(_finalContent, subject: 'ፍቅር');
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              )
-            : AboutUs();
+              return tabPosition < 3 ? stackWidget(tabPosition) : AboutUs();
             },
           );
         },
       );
+    }
+
+    Widget stackWidget(int tabPosition) {
+    return Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        ContainerWidget(
+          animation: isTapped ? tapAnimation : startAnimation,
+          zColor: _containerColor[tabPosition],
+          theContainer: animationIsCompleted
+              ? FutureBuilder<JsonContent>(
+              future: loadContent(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return PageView.builder(
+                    scrollDirection: Axis.horizontal,
+                    onPageChanged: showInterstitialAd,
+                    itemBuilder:
+                        (context, swipePagePosition) {
+                      switch (tabPosition) {
+                        case 0:
+                          finalContent = snapshot.data
+                              .contentOne[swipePagePosition];
+                          break;
+                        case 1:
+                          finalContent = snapshot.data
+                              .contentTwo[swipePagePosition];
+                          break;
+                        case 2:
+                          finalContent =
+                          snapshot.data.contentThree[
+                          swipePagePosition];
+                      }
+                      return Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(25.0),
+                          child: Text(finalContent,
+                              style: TextStyle(
+                                fontSize: 35.0,
+                                decoration:
+                                TextDecoration.none,
+                                color: Colors.white,
+                              )),
+                        ),
+                      );
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                      child: Text(
+                          "Fetching data has an error.Details: ${snapshot
+                              .error}"));
+                }
+                return Center(
+                    child: RefreshProgressIndicator(
+                        backgroundColor:
+                        CupertinoColors.white));
+              })
+              : Text(''),
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding:
+              const EdgeInsets.only(right: 40, bottom: 110),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  CupertinoButton(
+                    child: Icon(
+                      CupertinoIcons.share,
+                      color: Colors.white,
+                      size: 45.0,
+                    ),
+                    onPressed: () {
+                      SystemSound.play(SystemSoundType.click);
+                      Share.share(finalContent, subject: 'ፍቅር');
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
     }
   }
 
