@@ -45,7 +45,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
-  List<BottomNavigationBarItem> _bottomIcons;
+
+  List<BottomNavigationBarItem> bottomIcons;
   List<Color> _containerColor = [
     Colors.teal[700],
     Colors.blueGrey[600],
@@ -85,7 +86,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         // adUnitId: _INTERSTITIAL,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
-           if(event == MobileAdEvent.failedToLoad || event == MobileAdEvent.closed) {
+           if(event == MobileAdEvent.failedToLoad || event == MobileAdEvent.closed ) {
              _myInterstitial.load();
            }
         });
@@ -107,7 +108,10 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         print('on resume $message');
       },
       onLaunch: (Map<String, dynamic> message) async{
-        print('on launch $message');
+        if(message.isNotEmpty){
+          _myInterstitial.load();
+          _myInterstitial.show();
+        }
      }
     );
   }
@@ -132,8 +136,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     selectAnimation(startAnimation);
     firebaseCloudMessagingListeners();
 
-    _bottomIcons = [
-      BottomNavigationBarItem(title: Text('ለአንቺ'), icon: Icon(Icons.face)),
+    bottomIcons = [
+      BottomNavigationBarItem(title: Text('ለአንቺ'),icon: Icon(Icons.face)),
       BottomNavigationBarItem(title: Text('ለአንተ'), icon: Icon(Icons.mood)),
       BottomNavigationBarItem(
           title: Text('ፍቅር'),
@@ -191,7 +195,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
       return CupertinoTabScaffold(
         tabBar: CupertinoTabBar(
-          items: _bottomIcons,
+          items: bottomIcons,
           onTap: (int tappedPage) {
             if (tappedPage < 3) {
               isTapped = true;
@@ -237,14 +241,14 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                               .contentTwo[swipePagePosition];
                           break;
                         case 2:
-                          finalContent =
-                          snapshot.data.contentThree[
-                          swipePagePosition];
+                          finalContent = snapshot.data
+                          .contentThree[swipePagePosition];
                       }
                       return Center(
                         child: Padding(
                           padding: EdgeInsets.all(25.0),
-                          child: Text(finalContent,
+                          child: Text(
+                              finalContent,
                               style: TextStyle(
                                 fontSize: 35.0,
                                 decoration:
