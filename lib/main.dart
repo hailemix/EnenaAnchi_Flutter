@@ -12,8 +12,6 @@ import 'dart:io';
 const String MY_APP_ID = "ca-app-pub-9156727777369518~1185879969";
 const String _BANNER = "ca-app-pub-9156727777369518/7886249173";
 const String _INTERSTITIAL = "ca-app-pub-9156727777369518/8020534016";
-const String EMULATOR_DEVICE = "Pixel 2";
-const String REAL_DEVICE = "ASUS A006";
 void main() {
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,12 +45,7 @@ class MyHomePage extends StatefulWidget {
 class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   List<BottomNavigationBarItem> bottomIcons;
-  List<Color> _containerColor = [
-    Colors.teal[700],
-    Colors.blueGrey[600],
-    Colors.brown[400],
-    Colors.white
-  ];
+  List<Color> _containerColor = [Colors.teal[700], Colors.blueGrey[600], Colors.brown[400], Colors.white];
   Animation<double> startAnimation;
   Animation<double> tapAnimation;
   AnimationController _startAnimationController;
@@ -64,15 +57,13 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
   InterstitialAd _myInterstitial;
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
   MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
-    keywords: <String>['enena anchi', 'amharic love quotes','amharic love letters','love letter','amharic romantic quotes'],
+    keywords: <String>['enena anchi', 'amharic love quotes','amharic love ','ethiopian love ','amharic romantic quotes','ethiopian romance'],
     contentUrl: 'https://play.google.com/store/apps/dev?id=4732824418136294157&hl=en',
-    testDevices: <String>[EMULATOR_DEVICE, REAL_DEVICE],
   );
 
   BannerAd createBannerAd() {
     return BannerAd(
-        adUnitId: BannerAd.testAdUnitId,
-        // adUnitId:_BANNER,
+        adUnitId:_BANNER,
         size: AdSize.banner,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
@@ -82,8 +73,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
 
   InterstitialAd createInterstitialAd(){
     return InterstitialAd(
-        adUnitId: InterstitialAd.testAdUnitId,
-        // adUnitId: _INTERSTITIAL,
+        adUnitId: _INTERSTITIAL,
         targetingInfo: targetingInfo,
         listener: (MobileAdEvent event) {
            if(event == MobileAdEvent.failedToLoad || event == MobileAdEvent.closed ) {
@@ -124,6 +114,7 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       print("Settings registered: $settings");
     });
   }
+
   @override
   void initState() {
     super.initState();
@@ -139,12 +130,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     bottomIcons = [
       BottomNavigationBarItem(title: Text('ለአንቺ'),icon: Icon(Icons.face)),
       BottomNavigationBarItem(title: Text('ለአንተ'), icon: Icon(Icons.mood)),
-      BottomNavigationBarItem(
-          title: Text('ፍቅር'),
-          icon: Icon(Icons.favorite_border),
-          activeIcon: Icon(Icons.favorite_border, color: Colors.red)),
-      BottomNavigationBarItem(
-          title: Text('ስለእኛ'), icon: Icon(Icons.supervised_user_circle)),
+      BottomNavigationBarItem(title: Text('ፍቅር'), icon: Icon(Icons.favorite_border), activeIcon: Icon(Icons.favorite_border, color: Colors.red)),
+      BottomNavigationBarItem(title: Text('ስለእኛ'), icon: Icon(Icons.supervised_user_circle)),
     ];
 
 
@@ -162,32 +149,6 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     _tapAnimationController.dispose();
     _bannerAd?.dispose();
     super.dispose();
-  }
-
-  selectAnimation(Animation<double> animType) {
-    animType.addStatusListener((status) {
-      setState(() {
-        if (status == AnimationStatus.completed) {
-          animationIsCompleted = true;
-        } else {
-          animationIsCompleted = false;
-        }
-      });
-    });
-  }
-
-  void showInterstitialAd(int pageNumber) {
-
-    _myInterstitial = createInterstitialAd();
-    _myInterstitial.load();
-
-    if (pageNumber % 3 == 0) {
-      _myInterstitial.show(
-            anchorType: AnchorType.bottom,
-            anchorOffset: 0.0,
-         );
-    }
-
   }
 
     @override
@@ -214,63 +175,14 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       );
     }
 
-    Widget stackWidget(int tabPosition) {
+  Widget stackWidget(int tabPosition) {
     return Stack(
       alignment: Alignment.center,
       children: <Widget>[
         ContainerWidget(
           animation: isTapped ? tapAnimation : startAnimation,
           zColor: _containerColor[tabPosition],
-          theContainer: animationIsCompleted
-              ? FutureBuilder<JsonContent>(
-              future: loadContent(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    onPageChanged: showInterstitialAd,
-                    itemBuilder:
-                        (context, swipePagePosition) {
-                      switch (tabPosition) {
-                        case 0:
-                          finalContent = snapshot.data
-                              .contentOne[swipePagePosition];
-                          break;
-                        case 1:
-                          finalContent = snapshot.data
-                              .contentTwo[swipePagePosition];
-                          break;
-                        case 2:
-                          finalContent = snapshot.data
-                          .contentThree[swipePagePosition];
-                      }
-                      return Center(
-                        child: Padding(
-                          padding: EdgeInsets.all(25.0),
-                          child: Text(
-                              finalContent,
-                              style: TextStyle(
-                                fontSize: 35.0,
-                                decoration:
-                                TextDecoration.none,
-                                color: Colors.white,
-                              )),
-                        ),
-                      );
-                    },
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                      child: Text(
-                          "Fetching data has an error.Details: ${snapshot
-                              .error}"));
-                }
-                return Center(
-                    child: RefreshProgressIndicator(
-                        backgroundColor:
-                        CupertinoColors.white));
-              })
-              : Text(''),
+          theContainer: animationIsCompleted ? jsonAccessor(tabPosition) : Text(''),
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -301,5 +213,83 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
       ],
     );
     }
+
+  selectAnimation(Animation<double> animType) {
+    animType.addStatusListener((status) {
+      setState(() {
+        if (status == AnimationStatus.completed) {
+          animationIsCompleted = true;
+        } else {
+          animationIsCompleted = false;
+        }
+      });
+    });
+  }
+
+  void showInterstitialAd(int pageNumber) {
+
+    _myInterstitial = createInterstitialAd();
+    _myInterstitial.load();
+
+    if (pageNumber % 3 == 0) {
+      _myInterstitial.show(
+        anchorType: AnchorType.bottom,
+        anchorOffset: 0.0,
+      );
+    }
+  }
+
+  Widget jsonAccessor(int zTabPosition) {
+
+    return FutureBuilder<JsonContent>(
+        future: loadContent(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return PageView.builder(
+              scrollDirection: Axis.horizontal,
+              onPageChanged: showInterstitialAd,
+              itemBuilder:
+                  (context, swipePagePosition) {
+                switch (zTabPosition) {
+                  case 0:
+                    finalContent = snapshot.data
+                        .contentOne[swipePagePosition];
+                    break;
+                  case 1:
+                    finalContent = snapshot.data
+                        .contentTwo[swipePagePosition];
+                    break;
+                  case 2:
+                    finalContent = snapshot.data
+                        .contentThree[swipePagePosition];
+                }
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(25.0),
+                    child: Text(
+                        finalContent,
+                        style: TextStyle(
+                          fontSize: 35.0,
+                          decoration:
+                          TextDecoration.none,
+                          color: Colors.white,
+                        )),
+                  ),
+                );
+              },
+            );
+          } else if (snapshot.hasError) {
+            return Center(
+                child: Text(
+                    "Fetching data has an error.Details: ${snapshot
+                        .error}"));
+          }
+          return Center(
+              child: RefreshProgressIndicator(
+                  backgroundColor:
+                  CupertinoColors.white));
+        });
+  }
+
   }
 
