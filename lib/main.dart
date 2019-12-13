@@ -197,8 +197,8 @@ class MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   CupertinoButton(
                     child: Icon(
                       CupertinoIcons.share,
-                      color: Colors.white,
-                      size: 45.0,
+                      color: CupertinoColors.black,
+                      size: 35.0,
                     ),
                     onPressed: () {
                       SystemSound.play(SystemSoundType.click);
