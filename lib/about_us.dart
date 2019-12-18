@@ -1,4 +1,6 @@
 import 'dart:math';
+import 'package:enena_anchi/main.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_animations/simple_animations.dart';
 
@@ -54,6 +56,23 @@ class FancyBackgroundApp extends StatelessWidget {
           )
           ),
         ),
+
+        Positioned(
+          top: 30,
+          left: 5,
+          child: CupertinoButton(
+            child: Icon(
+              CupertinoIcons.home,
+              color: CupertinoColors.white,
+              size: 30.0,
+            ),
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context, AboutUsBackRoute(builder: (context) => HomeClass()));
+            },
+          ),
+        )
+
         ]
     );
   }
@@ -171,5 +190,23 @@ class AboutUs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  FancyBackgroundApp();
+  }
+}
+
+class AboutUsBackRoute<T> extends MaterialPageRoute<T> {
+  AboutUsBackRoute({WidgetBuilder builder, RouteSettings settings})
+      : super(builder: builder, settings: settings);
+
+  @override
+  Widget buildTransitions(BuildContext context, Animation<double> animation,
+      Animation<double> secondaryAnimation, Widget child) {
+    if (settings.isInitialRoute) return child;
+    return SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(-1, 0),
+        end: Offset.zero,
+      ).animate(animation),
+      child: child,
+    );
   }
 }

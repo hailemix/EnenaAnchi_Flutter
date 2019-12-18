@@ -1,4 +1,4 @@
-import 'package:enena_anchi/main.dart';
+import 'package:enena_anchi/messages_class.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

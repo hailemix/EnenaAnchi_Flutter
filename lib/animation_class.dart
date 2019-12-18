@@ -10,8 +10,8 @@ class ContainerWidget extends AnimatedWidget{
   final Widget theContainer;
   final Color zColor;
   static final _opacityTween = Tween<double>(begin: 0.1, end: 1.0);
-  static final _heightTween = Tween<double>(begin: 0, end: 550);
-  static final _widthTween = Tween<double>(begin: 0,end: 350);
+  static final _heightTween = Tween<double>(begin: 100, end: 550);
+  static final _widthTween = Tween<double>(begin: 200, end: 350);
 
   ContainerWidget({Key key,this.theContainer,Animation<double> animation,this.zColor}) : super(key:key, listenable: animation);
 
