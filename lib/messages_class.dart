@@ -176,32 +176,38 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
         Positioned(
           bottom: 110,
           left: 40,
-          child: CupertinoButton(
-            child: Icon(
-              CupertinoIcons.home,
-              color: CupertinoColors.black,
-              size: 35.0,
+          child: Opacity(
+            opacity: animationIsCompleted ? 1.0 : 0.0,
+            child: CupertinoButton(
+              child: Icon(
+                CupertinoIcons.home,
+                color: CupertinoColors.black,
+                size: 35.0,
+              ),
+              onPressed: () {
+                //Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                    context, BackRoute(builder: (context) => HomeClass()));
+              },
             ),
-            onPressed: () {
-              //Navigator.of(context).pop();
-              Navigator.pushReplacement(
-                  context, BackRoute(builder: (context) => HomeClass()));
-            },
           ),
         ),
         Positioned(
           bottom: 110,
           right: 40,
-          child: CupertinoButton(
-            child: Icon(
-              CupertinoIcons.share,
-              color: CupertinoColors.black,
-              size: 35.0,
+          child: Opacity(
+            opacity: animationIsCompleted ? 1.0 : 0.0,
+            child: CupertinoButton(
+              child: Icon(
+                CupertinoIcons.share,
+                color: CupertinoColors.black,
+                size: 35.0,
+              ),
+              onPressed: () {
+                SystemSound.play(SystemSoundType.click);
+                Share.share(finalContent, subject: 'ፍቅር');
+              },
             ),
-            onPressed: () {
-              SystemSound.play(SystemSoundType.click);
-              Share.share(finalContent, subject: 'ፍቅር');
-            },
           ),
         ),
       ],
