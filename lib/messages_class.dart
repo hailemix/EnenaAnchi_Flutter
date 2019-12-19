@@ -22,8 +22,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   List<Color> _containerColor = [
     Colors.teal[700],
     Colors.blueGrey[600],
-    Colors.brown[400],
-    Colors.white
+    Colors.brown[400]
   ];
   Animation<double> startAnimation;
   Animation<double> tapAnimation;
@@ -155,10 +154,24 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
         return CupertinoTabView(
           builder: (BuildContext context) {
             return stackWidget(tabPosition);
+
           },
+
         );
       },
     );
+  }
+
+  double opacityChanger() {
+    double opacityValue;
+
+    if (animationIsCompleted) {
+      opacityValue = 1.0;
+    } else {
+      opacityValue = 0.0;
+    }
+
+    return opacityValue;
   }
 
   Widget stackWidget(int tabPosition) {
@@ -169,23 +182,23 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
           child: ContainerWidget(
             animation: isTapped ? tapAnimation : startAnimation,
             zColor: _containerColor[tabPosition],
-            theContainer:
-                animationIsCompleted ? jsonAccessor(tabPosition) : Text(''),
+            theContainer: animationIsCompleted
+                ? jsonAccessor(tabPosition)
+                : Text(''),
           ),
         ),
         Positioned(
           bottom: 110,
           left: 40,
           child: Opacity(
-            opacity: animationIsCompleted ? 1.0 : 0.0,
+            opacity: opacityChanger(),
             child: CupertinoButton(
               child: Icon(
                 CupertinoIcons.home,
                 color: CupertinoColors.black,
-                size: 35.0,
+                size: 30.0,
               ),
               onPressed: () {
-                //Navigator.of(context).pop();
                 Navigator.pushReplacement(
                     context, BackRoute(builder: (context) => HomeClass()));
               },
@@ -196,12 +209,12 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
           bottom: 110,
           right: 40,
           child: Opacity(
-            opacity: animationIsCompleted ? 1.0 : 0.0,
+            opacity: opacityChanger(),
             child: CupertinoButton(
               child: Icon(
                 CupertinoIcons.share,
                 color: CupertinoColors.black,
-                size: 35.0,
+                size: 30.0,
               ),
               onPressed: () {
                 SystemSound.play(SystemSoundType.click);

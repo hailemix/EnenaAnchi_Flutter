@@ -66,7 +66,8 @@ class _HomeClassState extends State<HomeClass>
                         color: CupertinoColors.activeBlue,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         child: InkWell(
-                          child: Center(child: Text('Messages'),),
+                          child: Center(child: Text('መልእክቶች', style: TextStyle(
+                              fontSize: 20.0)),),
                           onTap: () {
                             setState(() {
                               Navigator.push(context, MaterialPageRoute(
@@ -77,10 +78,19 @@ class _HomeClassState extends State<HomeClass>
                     ),
                   ),
                   Container(
-                    width: 160,
-                    height: 160,
-                    color: CupertinoColors.activeOrange,
-                    child: Center(child: Text('Info'),),),
+                    width: sideMeasure,
+                    height: sideMeasure,
+                    child: Material(
+                      color: CupertinoColors.activeOrange,
+                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      child: InkWell(
+                          child: Center(child: Text('መረጃዎች', style: TextStyle(
+                              fontSize: 20.0)),
+                          ),
+                          onTap: () {}
+                      ),
+                    ),
+                  ),
                 ],
               ),
 
@@ -92,20 +102,21 @@ class _HomeClassState extends State<HomeClass>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Container(
-                    width: 160,
-                    height: 160,
+                    width: sideMeasure,
+                    height: sideMeasure,
                     color: CupertinoColors.activeGreen,
-                    child: Center(child: Text('Favourites'),),),
+                    child: Center(child: Text(
+                      'የወደድኩት', style: TextStyle(fontSize: 20.0),),),),
 
                   Container(
                     width: sideMeasure,
                     height: sideMeasure,
                     child: Material(
-                        color: CupertinoColors.lightBackgroundGray,
+                        color: CupertinoColors.destructiveRed,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         child: InkWell(
                           child: Center(child: Text(
-                            'ስለ እኛ', style: TextStyle(fontSize: 30.0),),),
+                            'ስለ እኛ', style: TextStyle(fontSize: 20.0),),),
                           onTap: () {
                             setState(() {
                               Navigator.push(context, MaterialPageRoute(
