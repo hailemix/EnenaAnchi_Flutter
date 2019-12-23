@@ -62,8 +62,8 @@ class FancyBackgroundApp extends StatelessWidget {
           left: 5,
           child: CupertinoButton(
             child: Icon(
-              CupertinoIcons.home,
-              color: CupertinoColors.black,
+              CupertinoIcons.back,
+              color: CupertinoColors.white,
               size: 30.0,
             ),
             onPressed: () {

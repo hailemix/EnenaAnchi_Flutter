@@ -188,7 +188,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
           ),
         ),
         Positioned(
-          bottom: 110,
+          bottom: 170,
           left: 40,
           child: Opacity(
             opacity: opacityChanger(),
@@ -206,7 +206,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
           ),
         ),
         Positioned(
-          bottom: 110,
+          bottom: 170,
           right: 40,
           child: Opacity(
             opacity: opacityChanger(),

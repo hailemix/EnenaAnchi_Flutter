@@ -56,77 +56,95 @@ class _HomeClassState extends State<HomeClass>
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    width: sideMeasure,
-                    height: sideMeasure,
-                    child: Material(
-                        color: CupertinoColors.activeBlue,
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        child: InkWell(
-                          child: Center(child: Text('መልእክቶች', style: TextStyle(
-                              fontSize: 20.0)),),
-                          onTap: () {
-                            setState(() {
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => RomanceApp()));
-                            });
-                          },
-                        )
-                    ),
-                  ),
-                  Container(
-                    width: sideMeasure,
-                    height: sideMeasure,
-                    child: Material(
-                      color: CupertinoColors.activeOrange,
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      child: InkWell(
-                          child: Center(child: Text('መረጃዎች', style: TextStyle(
-                              fontSize: 20.0)),
-                          ),
-                          onTap: () {}
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: sideMeasure,
+                      height: sideMeasure,
+                      child: Material(
+                          color: CupertinoColors.activeBlue,
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          child: InkWell(
+                            child: Center(child: Text('መልእክቶች',
+                                style: TextStyle(
+                                    fontSize: 20.0)),),
+                            onTap: () {
+                              setState(() {
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => RomanceApp()));
+                              });
+                            },
+                          )
                       ),
                     ),
-                  ),
-                ],
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 5.0),),
+                    Container(
+                      width: sideMeasure,
+                      height: sideMeasure,
+                      child: Material(
+                        color: CupertinoColors.activeOrange,
+                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        child: InkWell(
+                            child: Center(child: Text('መረጃዎች', style: TextStyle(
+                                fontSize: 20.0)),
+                            ),
+                            onTap: () {}
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
             Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.0),
+              padding: EdgeInsets.symmetric(vertical: 5.0),
             ),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Container(
-                    width: sideMeasure,
-                    height: sideMeasure,
-                    color: CupertinoColors.activeGreen,
-                    child: Center(child: Text(
-                      'የወደድኩት', style: TextStyle(fontSize: 20.0),),),),
-
-                  Container(
-                    width: sideMeasure,
-                    height: sideMeasure,
-                    child: Material(
-                        color: CupertinoColors.destructiveRed,
+              Flexible(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(
+                      width: sideMeasure,
+                      height: sideMeasure,
+                      child: Material(
+                        color: CupertinoColors.activeGreen,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         child: InkWell(
-                          child: Center(child: Text(
-                            'ስለ እኛ', style: TextStyle(fontSize: 20.0),),),
-                          onTap: () {
-                            setState(() {
-                              Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => AboutUs()));
-                            });
-                          },
-                        )
+                            child: Center(
+                              child: Text(
+                                'የወደድኩት', style: TextStyle(fontSize: 20.0),),),
+                            onTap: () {
+                              setState(() {
+
+                              });
+                            }
+                        ),
+                      ),),
+                    Padding(padding: EdgeInsets.symmetric(horizontal: 5.0),),
+
+                    Container(
+                      width: sideMeasure,
+                      height: sideMeasure,
+                      child: Material(
+                          color: CupertinoColors.destructiveRed,
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          child: InkWell(
+                            child: Center(child: Text(
+                              'ስለ እኛ', style: TextStyle(fontSize: 20.0),),),
+                            onTap: () {
+                              setState(() {
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => AboutUs()));
+                              });
+                            },
+                          )
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               )
           ],
           )
