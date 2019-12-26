@@ -64,12 +64,18 @@ class _HomeClassState extends State<HomeClass>
                       width: sideMeasure,
                       height: sideMeasure,
                       child: Material(
-                          color: CupertinoColors.activeBlue,
+                          color: CupertinoColors.darkBackgroundGray,
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                           child: InkWell(
-                            child: Center(child: Text('መልእክቶች',
-                                style: TextStyle(
-                                    fontSize: 20.0)),),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('መልእክቶች', style: TextStyle(fontSize: 20.0,color: Colors.white),),
+                                  Icon(CupertinoIcons.mail,color: CupertinoColors.white,size: 50,)
+                                ],
+                              )
+                            ),
                             onTap: () {
                               setState(() {
                                 Navigator.push(context, MaterialPageRoute(
@@ -84,11 +90,17 @@ class _HomeClassState extends State<HomeClass>
                       width: sideMeasure,
                       height: sideMeasure,
                       child: Material(
-                        color: CupertinoColors.activeOrange,
+                        color: CupertinoColors.darkBackgroundGray,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         child: InkWell(
-                            child: Center(child: Text('መረጃዎች', style: TextStyle(
-                                fontSize: 20.0)),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text('መረጃዎች', style: TextStyle(fontSize: 20.0,color: Colors.white)),
+                                Icon(CupertinoIcons.info,color: CupertinoColors.white,size: 50,)
+                              ],
+                            ),
                             ),
                             onTap: () {}
                         ),
@@ -110,12 +122,19 @@ class _HomeClassState extends State<HomeClass>
                       width: sideMeasure,
                       height: sideMeasure,
                       child: Material(
-                        color: CupertinoColors.activeGreen,
+                        color: CupertinoColors.darkBackgroundGray,
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         child: InkWell(
                             child: Center(
-                              child: Text(
-                                'የወደድኩት', style: TextStyle(fontSize: 20.0),),),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    'Techemari',
+                                  style: TextStyle(fontSize: 20.0, color: Colors.white),),
+                                  Icon(CupertinoIcons.add_circled,color: CupertinoColors.white,size: 50,)
+                                ],
+                              ),),
                             onTap: () {
                               setState(() {
 
@@ -129,11 +148,17 @@ class _HomeClassState extends State<HomeClass>
                       width: sideMeasure,
                       height: sideMeasure,
                       child: Material(
-                          color: CupertinoColors.destructiveRed,
+                          color: CupertinoColors.darkBackgroundGray,
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
                           child: InkWell(
-                            child: Center(child: Text(
-                              'ስለ እኛ', style: TextStyle(fontSize: 20.0),),),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('ስለ እኛ', style: TextStyle(fontSize: 20.0,color: Colors.white),),
+                                  Icon(CupertinoIcons.group, color: CupertinoColors.white,size: 50,)
+                                ],
+                              ),),
                             onTap: () {
                               setState(() {
                                 Navigator.push(context, MaterialPageRoute(

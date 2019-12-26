@@ -3,6 +3,8 @@ import 'package:enena_anchi/animation_class.dart';
 import 'package:enena_anchi/main.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flare_flutter/flare_actor.dart';
+import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
@@ -46,6 +48,10 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
     contentUrl:
         'https://play.google.com/store/apps/dev?id=4732824418136294157&hl=en',
   );
+
+  String favouriteButton = "Unlike";
+  final FlareControls controls = FlareControls();
+  bool contentIsLiked = false;
 
   BannerAd createBannerAd() {
     return BannerAd(
@@ -101,6 +107,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
+
 
     _startAnimationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 1800));
@@ -188,13 +195,13 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
           ),
         ),
         Positioned(
-          bottom: 170,
+          top: 50,
           left: 40,
           child: Opacity(
             opacity: opacityChanger(),
             child: CupertinoButton(
               child: Icon(
-                CupertinoIcons.home,
+                CupertinoIcons.back,
                 color: CupertinoColors.black,
                 size: 30.0,
               ),
@@ -203,6 +210,33 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
                     context, BackRoute(builder: (context) => HomeClass()));
               },
             ),
+          ),
+        ),
+        Positioned(
+          bottom: 165,
+          left: 35,
+          child: Opacity(
+            opacity: opacityChanger(),
+            child: GestureDetector(
+              child: Container(
+                  width: 70.0,
+                  height: 70.0,
+                  child: FlareActor("images/like_button.flr", animation: favouriteButton, controller: controls),
+
+              ),
+              onTap: (){
+                contentIsLiked = !contentIsLiked;
+                  setState(() {
+                    if (contentIsLiked) {
+                      controls.play("Like");
+                    } else {
+                     controls.play("Unlike");
+                    }
+
+                  });
+              },
+            ),
+
           ),
         ),
         Positioned(
@@ -240,9 +274,9 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   }
 
   void showInterstitialAd(int pageNumber) {
+      controls.play("Unlike");
     _myInterstitial = createInterstitialAd();
     _myInterstitial.load();
-
     if (pageNumber % 3 == 0) {
       _myInterstitial.show(
         anchorType: AnchorType.bottom,
@@ -271,6 +305,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
                     finalContent =
                         snapshot.data.contentThree[swipePagePosition];
                 }
+
                 return Center(
                   child: Padding(
                     padding: EdgeInsets.all(25.0),
