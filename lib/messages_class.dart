@@ -125,9 +125,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
       BottomNavigationBarItem(title: Text('ለአንቺ'), icon: Icon(Icons.face)),
       BottomNavigationBarItem(title: Text('ለአንተ'), icon: Icon(Icons.mood)),
       BottomNavigationBarItem(
-          title: Text('ፍቅር'),
-          icon: Icon(Icons.favorite_border),
-          activeIcon: Icon(Icons.favorite_border, color: Colors.red)),
+          title: Text('እዉነታ'), icon: Icon(Icons.event_note)),
     ];
 
     _bannerAd = createBannerAd()
@@ -194,10 +192,8 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
                 : Text(''),
           ),
         ),
-        Positioned(
-          top: 50,
-          left: 40,
-          child: Opacity(
+        CupertinoNavigationBar(
+          leading: Opacity(
             opacity: opacityChanger(),
             child: CupertinoButton(
               child: Icon(
@@ -211,10 +207,24 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
               },
             ),
           ),
+          trailing: Opacity(
+            opacity: opacityChanger(),
+            child: CupertinoButton(
+              child: Icon(
+                CupertinoIcons.share,
+                color: CupertinoColors.black,
+                size: 25.0,
+              ),
+              onPressed: () {
+                SystemSound.play(SystemSoundType.click);
+                Share.share(finalContent, subject: 'ፍቅር');
+              },
+            ),
+          ),
         ),
         Positioned(
-          bottom: 165,
-          left: 35,
+          bottom: 100,
+          right: 35,
           child: Opacity(
             opacity: opacityChanger(),
             child: GestureDetector(
@@ -237,24 +247,6 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
               },
             ),
 
-          ),
-        ),
-        Positioned(
-          bottom: 170,
-          right: 40,
-          child: Opacity(
-            opacity: opacityChanger(),
-            child: CupertinoButton(
-              child: Icon(
-                CupertinoIcons.share,
-                color: CupertinoColors.black,
-                size: 30.0,
-              ),
-              onPressed: () {
-                SystemSound.play(SystemSoundType.click);
-                Share.share(finalContent, subject: 'ፍቅር');
-              },
-            ),
           ),
         ),
       ],

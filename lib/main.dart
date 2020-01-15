@@ -71,8 +71,10 @@ class _HomeClassState extends State<HomeClass>
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text('መልእክቶች', style: TextStyle(fontSize: 20.0,color: Colors.white),),
-                                  Icon(CupertinoIcons.mail,color: CupertinoColors.white,size: 50,)
+                                  Icon(Icons.mail, color: CupertinoColors.white,
+                                    size: 30,),
+                                  Text('መልእክቶች', style: TextStyle(
+                                      fontSize: 20.0, color: Colors.white),)
                                 ],
                               )
                             ),
@@ -97,8 +99,10 @@ class _HomeClassState extends State<HomeClass>
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                Text('መረጃዎች', style: TextStyle(fontSize: 20.0,color: Colors.white)),
-                                Icon(CupertinoIcons.info,color: CupertinoColors.white,size: 50,)
+                                Icon(Icons.info, color: CupertinoColors.white,
+                                  size: 30,),
+                                Text('መረጃዎች', style: TextStyle(
+                                    fontSize: 20.0, color: Colors.white))
                               ],
                             ),
                             ),
@@ -129,10 +133,10 @@ class _HomeClassState extends State<HomeClass>
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text(
-                                    'Techemari',
-                                  style: TextStyle(fontSize: 20.0, color: Colors.white),),
-                                  Icon(CupertinoIcons.add_circled,color: CupertinoColors.white,size: 50,)
+                                  Icon(Icons.favorite_border,
+                                    color: CupertinoColors.white, size: 30,),
+                                  Text('የወደድኳቸዉ', style: TextStyle(
+                                      fontSize: 20.0, color: Colors.white),),
                                 ],
                               ),),
                             onTap: () {
@@ -155,8 +159,11 @@ class _HomeClassState extends State<HomeClass>
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  Text('ስለ እኛ', style: TextStyle(fontSize: 20.0,color: Colors.white),),
-                                  Icon(CupertinoIcons.group, color: CupertinoColors.white,size: 50,)
+                                  Icon(
+                                    Icons.group, color: CupertinoColors.white,
+                                    size: 30,),
+                                  Text('ስለ እኛ', style: TextStyle(
+                                      fontSize: 20.0, color: Colors.white),)
                                 ],
                               ),),
                             onTap: () {
