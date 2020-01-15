@@ -52,6 +52,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   String favouriteButton = "Unlike";
   final FlareControls controls = FlareControls();
   bool contentIsLiked = false;
+  String tabTitle = '';
 
   BannerAd createBannerAd() {
     return BannerAd(
@@ -159,7 +160,6 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
         return CupertinoTabView(
           builder: (BuildContext context) {
             return stackWidget(tabPosition);
-
           },
 
         );
@@ -179,7 +179,25 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
     return opacityValue;
   }
 
+  String changeTitle(int zTabPosition) {
+    switch (zTabPosition) {
+      case 0:
+        tabTitle = 'ለአንቺ';
+        break;
+      case 1:
+        tabTitle = 'ለአንተ';
+        break;
+      case 2:
+        tabTitle = 'እዉነታ';
+        break;
+      default:
+        tabTitle = 'ለአንቺ';
+    }
+    return tabTitle;
+  }
+
   Widget stackWidget(int tabPosition) {
+    changeTitle(tabPosition);
     return Stack(
       children: <Widget>[
         Align(
@@ -207,6 +225,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
               },
             ),
           ),
+          middle: Text(tabTitle, style: TextStyle(fontSize: 20.0),),
           trailing: Opacity(
             opacity: opacityChanger(),
             child: CupertinoButton(
@@ -229,21 +248,21 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
             opacity: opacityChanger(),
             child: GestureDetector(
               child: Container(
-                  width: 70.0,
-                  height: 70.0,
-                  child: FlareActor("images/like_button.flr", animation: favouriteButton, controller: controls),
+                width: 70.0,
+                height: 70.0,
+                child: FlareActor("images/like_button.flr", animation: favouriteButton, controller: controls),
 
               ),
               onTap: (){
                 contentIsLiked = !contentIsLiked;
-                  setState(() {
-                    if (contentIsLiked) {
-                      controls.play("Like");
-                    } else {
-                     controls.play("Unlike");
-                    }
-
-                  });
+                setState(() {
+                  if (contentIsLiked) {
+                    controls.play("Like");
+                    // TODO
+                  } else {
+                    controls.play("Unlike");
+                  }
+                });
               },
             ),
 

@@ -1,4 +1,5 @@
 import 'package:enena_anchi/about_us.dart';
+import 'package:enena_anchi/favourites_class.dart';
 import 'package:enena_anchi/messages_class.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,6 +74,8 @@ class _HomeClassState extends State<HomeClass>
                                 children: <Widget>[
                                   Icon(Icons.mail, color: CupertinoColors.white,
                                     size: 30,),
+                                  Padding(padding: EdgeInsets.symmetric(
+                                      vertical: 3.0),),
                                   Text('መልእክቶች', style: TextStyle(
                                       fontSize: 20.0, color: Colors.white),)
                                 ],
@@ -101,6 +104,8 @@ class _HomeClassState extends State<HomeClass>
                               children: <Widget>[
                                 Icon(Icons.info, color: CupertinoColors.white,
                                   size: 30,),
+                                Padding(padding: EdgeInsets.symmetric(
+                                    vertical: 3.0),),
                                 Text('መረጃዎች', style: TextStyle(
                                     fontSize: 20.0, color: Colors.white))
                               ],
@@ -135,13 +140,17 @@ class _HomeClassState extends State<HomeClass>
                                 children: <Widget>[
                                   Icon(Icons.favorite_border,
                                     color: CupertinoColors.white, size: 30,),
+                                  Padding(padding: EdgeInsets.symmetric(
+                                      vertical: 3.0),),
                                   Text('የወደድኳቸዉ', style: TextStyle(
                                       fontSize: 20.0, color: Colors.white),),
                                 ],
                               ),),
                             onTap: () {
                               setState(() {
-
+                                Navigator.push(context, MaterialPageRoute(
+                                    builder: (context) => MyFavourites()
+                                ));
                               });
                             }
                         ),
@@ -162,6 +171,8 @@ class _HomeClassState extends State<HomeClass>
                                   Icon(
                                     Icons.group, color: CupertinoColors.white,
                                     size: 30,),
+                                  Padding(padding: EdgeInsets.symmetric(
+                                      vertical: 3.0),),
                                   Text('ስለ እኛ', style: TextStyle(
                                       fontSize: 20.0, color: Colors.white),)
                                 ],
