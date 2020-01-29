@@ -1,3 +1,5 @@
+import 'package:enena_anchi/database_bloc.dart';
+import 'package:enena_anchi/favourite_model.dart';
 import 'package:enena_anchi/json_model.dart';
 import 'package:enena_anchi/animation_class.dart';
 import 'package:enena_anchi/main.dart';
@@ -15,11 +17,14 @@ const String _BANNER = "ca-app-pub-9156727777369518/7886249173";
 const String _INTERSTITIAL = "ca-app-pub-9156727777369518/8020534016";
 
 class RomanceApp extends StatefulWidget {
+
   @override
   MyHomePageState createState() => MyHomePageState();
 }
 
 class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
+
+
   List<BottomNavigationBarItem> bottomIcons;
   List<Color> _containerColor = [
     Colors.teal[700],
@@ -46,13 +51,15 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
       'ethiopian romance'
     ],
     contentUrl:
-        'https://play.google.com/store/apps/dev?id=4732824418136294157&hl=en',
+    'https://play.google.com/store/apps/dev?id=4732824418136294157&hl=en',
   );
 
   String favouriteButton = "Unlike";
   final FlareControls controls = FlareControls();
   bool contentIsLiked = false;
   String tabTitle = '';
+  final bloc = FavouriteBloc();
+  List<FavouriteContent> testFavourites;
 
   BannerAd createBannerAd() {
     return BannerAd(
@@ -85,8 +92,8 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
 
     _firebaseMessaging.configure(
         onMessage: (Map<String, dynamic> message) async {
-      print('on message $message');
-    }, onResume: (Map<String, dynamic> message) async {
+          print('on message $message');
+        }, onResume: (Map<String, dynamic> message) async {
       print('on resume $message');
     }, onLaunch: (Map<String, dynamic> message) async {
       if (message.isNotEmpty) {
@@ -108,7 +115,6 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-
 
     _startAnimationController = AnimationController(
         vsync: this, duration: Duration(milliseconds: 1800));
@@ -253,12 +259,14 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
                 child: FlareActor("images/like_button.flr", animation: favouriteButton, controller: controls),
 
               ),
-              onTap: (){
+              onTap: () async {
                 contentIsLiked = !contentIsLiked;
                 setState(() {
                   if (contentIsLiked) {
                     controls.play("Like");
-                    // TODO
+
+                    FavouriteContent zContent = testFavourites[0];
+                    bloc.add(zContent);
                   } else {
                     controls.play("Unlike");
                   }
@@ -285,7 +293,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   }
 
   void showInterstitialAd(int pageNumber) {
-      controls.play("Unlike");
+    controls.play("Unlike");
     _myInterstitial = createInterstitialAd();
     _myInterstitial.load();
     if (pageNumber % 3 == 0) {
@@ -314,8 +322,11 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
                     break;
                   case 2:
                     finalContent =
-                        snapshot.data.contentThree[swipePagePosition];
+                    snapshot.data.contentThree[swipePagePosition];
                 }
+
+                testFavourites =
+                [FavouriteContent(favouriteContent: finalContent)];
 
                 return Center(
                   child: Padding(
