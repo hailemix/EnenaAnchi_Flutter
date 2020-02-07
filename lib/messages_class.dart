@@ -261,16 +261,11 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
 
               ),
               onTap: () async {
-                contentIsLiked = !contentIsLiked;
                 FavouriteContent zContent = testFavourites[0];
                 setState(() {
-                  if (contentIsLiked) {
-                    controls.play("Like");
-                    bloc.add(
-                        zContent); // Add to the favourite content to Database
-                  } else {
-                    controls.play("Unlike");
-                  }
+                  controls.play("Like");
+                  bloc.add(
+                      zContent); // Add to the favourite content to Database
                 });
               },
             ),
@@ -325,10 +320,8 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
                     finalContent =
                     snapshot.data.contentThree[swipePagePosition];
                 }
-
                 testFavourites =
                 [FavouriteContent(favouriteContent: finalContent)];
-
                 return Center(
                   child: Padding(
                     padding: EdgeInsets.all(25.0),
