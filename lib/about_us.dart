@@ -26,44 +26,29 @@ class FancyBackgroundApp extends StatelessWidget {
         )),
         Center(
           child:Container(
-          width: 260,
-          height: 180,
-          decoration: BoxDecoration(
-            
-            border: Border.all(style: BorderStyle.solid,color: Colors.white),
-            shape: BoxShape.rectangle,
-            borderRadius: BorderRadius.all(Radius.circular(10.0))
-            ) ,
-          child:Center(
-            child: Container(
-              width: 250,
-              height: 170,
-              decoration: BoxDecoration(
-
-                  border: Border.all(style: BorderStyle.solid,color: Colors.white),
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.all(Radius.circular(7.0))
-              ) ,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  myTextWidget('ዲቨሎፐር',40.0),
-                  myTextWidget('ኤ.ኤፍ.ሲ ኢትዮጲያ', 20.0),
-                  myTextWidget('hailemix2@gmail.com', 20.0)
-                ],
-              ),
+            decoration: BoxDecoration(
+              border: Border(bottom: BorderSide(color: Theme
+                  .of(context)
+                  .bottomAppBarColor)),
             ),
-          )
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                myTextWidget('ዲቨሎፐር', 40.0),
+                myTextWidget('ኤ.ኤፍ.ሲ ኢትዮጲያ', 20.0),
+                myTextWidget('hailemix2@gmail.com', 20.0)
+              ],
+            ),
           ),
         ),
-
         Positioned(
           top: 30,
           left: 5,
           child: CupertinoButton(
             child: Icon(
               CupertinoIcons.back,
-              color: CupertinoColors.white,
+              color: CupertinoColors.activeBlue,
               size: 30.0,
             ),
             onPressed: () {
@@ -71,8 +56,7 @@ class FancyBackgroundApp extends StatelessWidget {
                   context, AboutUsBackRoute(builder: (context) => HomeClass()));
             },
           ),
-        )
-
+        ),
         ]
     );
   }
@@ -82,7 +66,7 @@ class FancyBackgroundApp extends StatelessWidget {
     type: MaterialType.transparency,
       child: Padding(
       padding: const EdgeInsets.all(2.0),
-      child: Text(
+        child: SelectableText(
         child,
         style: TextStyle(fontSize:myFontSize,color: Colors.white,fontFamily: 'Nyala'),
       ),

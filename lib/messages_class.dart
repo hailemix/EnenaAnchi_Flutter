@@ -61,6 +61,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   final bloc = FavouriteBloc();
   List<FavouriteContent> testFavourites;
 
+
   BannerAd createBannerAd() {
     return BannerAd(
         adUnitId: _BANNER,
@@ -222,7 +223,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
             child: CupertinoButton(
               child: Icon(
                 CupertinoIcons.back,
-                color: CupertinoColors.black,
+                color: CupertinoColors.activeBlue,
                 size: 30.0,
               ),
               onPressed: () {
@@ -261,12 +262,12 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
               ),
               onTap: () async {
                 contentIsLiked = !contentIsLiked;
+                FavouriteContent zContent = testFavourites[0];
                 setState(() {
                   if (contentIsLiked) {
                     controls.play("Like");
-
-                    FavouriteContent zContent = testFavourites[0];
-                    bloc.add(zContent);
+                    bloc.add(
+                        zContent); // Add to the favourite content to Database
                   } else {
                     controls.play("Unlike");
                   }

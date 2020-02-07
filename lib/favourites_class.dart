@@ -26,57 +26,73 @@ class MyFavouritesState extends State<MyFavourites> {
       home: CupertinoPageScaffold(
           navigationBar: CupertinoNavigationBar(
               leading: CupertinoButton(
-                  child: Icon(CupertinoIcons.back), onPressed: () {
+                  child: Icon(CupertinoIcons.back, size: 30.0,),
+                  onPressed: () {
                 Navigator.pop(context);
-              })
+                  }),
+            backgroundColor: CupertinoColors.lightBackgroundGray,
           ),
-          child: StreamBuilder<List<FavouriteContent>>(
-            stream: bloc.favourites,
-            builder: (BuildContext context,
-                AsyncSnapshot<List<FavouriteContent>> snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    FavouriteContent content = snapshot.data[index];
+          child: Container(
+            decoration: BoxDecoration(
+              color: CupertinoColors.lightBackgroundGray,
+            ),
+            child: StreamBuilder<List<FavouriteContent>>(
+              stream: bloc.favourites,
+              builder: (BuildContext context,
+                  AsyncSnapshot<List<FavouriteContent>> snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      FavouriteContent content = snapshot.data[index];
+                      return Dismissible(
+                          key: UniqueKey(),
+                          background: Container(color: Colors.red),
+                          onDismissed: (direction) {
+                            bloc.delete(content.id);
+                          },
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Expanded(
+                                flex: 1,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border(
+                                          bottom: BorderSide(color: Theme
+                                              .of(context)
+                                              .dividerColor))
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(25.0),
+                                    child: SelectableText(
+                                      content.favouriteContent,
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      scrollPhysics: ClampingScrollPhysics(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
 
-                    return Dismissible(
-                        key: UniqueKey(),
-                        background: Container(color: Colors.red),
-                        onDismissed: (direction) {
-                          bloc.delete(content.id);
-                        },
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(content.id.toString()),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(padding: EdgeInsets.all(20),
-                                child: SelectableText(
-                                  content.favouriteContent,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                  scrollPhysics: ClampingScrollPhysics(),
-                                ),),
-                            ),
-                          ],
-                        )
+                      );
+                    },
+                  );
+                }
 
-                    );
-                  },
-                );
-              }
-
-              else
-                return Center(
-                    child: Flex(
-                        direction: Axis.vertical,
-                        children: [
-                          Icon(Icons.announcement),
-                          Text('No Favourites Added')
-                        ]));
-            },
+                else
+                  return Center(
+                      child: Flex(
+                          direction: Axis.vertical,
+                          children: [
+                            Icon(Icons.announcement),
+                            Text('No Favourites Added')
+                          ]));
+              },
+            ),
           )
       ),
     );

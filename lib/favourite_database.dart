@@ -23,17 +23,17 @@ class DBProvider {
     String path = join(documentsDirectory.path, "favouriteDB.db");
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
-      await db.execute("CREATE TABLE FavouriteContent ("
+          await db.execute("CREATE TABLE FavouriteContent("
           "id INTEGER PRIMARY KEY,"
-          "favourite_content TEXT"
+              "favourite_content TEXT UNIQUE"
           ")");
     });
   }
 
   newFavourite(FavouriteContent newFavourite) async {
     final db = await database;
-    var table =
-        await db.rawQuery("SELECT MAX(id)+1 as id FROM FavouriteContent");
+    var table = await db.rawQuery(
+        "SELECT MAX(id)+1 as id FROM FavouriteContent");
     int id = table.first["id"];
     var raw = await db.rawInsert(
         "INSERT Into FavouriteContent (id,favourite_content)"
@@ -42,17 +42,11 @@ class DBProvider {
     return raw;
   }
 
-  updateFavourite(FavouriteContent newFavourite) async {
-    final db = await database;
-    var res = await db.update("FavouriteContent", newFavourite.toMap(),
-        where: "id = ?", whereArgs: [newFavourite.id]);
-    return res;
-  }
 
   getFavourite(int id) async {
     final db = await database;
-    var res =
-        await db.query("FavouriteContent", where: "id = ?", whereArgs: [id]);
+    var res = await db.query(
+        "FavouriteContent", where: "id = ?", whereArgs: [id]);
     return res.isNotEmpty ? FavouriteContent.fromMap(res.first) : null;
   }
 
