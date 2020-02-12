@@ -120,20 +120,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.1.6"
-  flare_dart:
-    dependency: transitive
-    description:
-      name: flare_dart
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.3.2"
-  flare_flutter:
-    dependency: "direct main"
-    description:
-      name: flare_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.8.3"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -238,6 +224,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.19"
+  like_button:
+    dependency: "direct main"
+    description:
+      name: like_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.0"
   matcher:
     dependency: transitive
     description:

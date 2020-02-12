@@ -5,10 +5,9 @@ import 'package:enena_anchi/animation_class.dart';
 import 'package:enena_anchi/main.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flare_flutter/flare_actor.dart';
-import 'package:flare_flutter/flare_controls.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 import 'package:share/share.dart';
 import 'package:flutter/services.dart';
 import 'dart:io';
@@ -54,13 +53,12 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
     'https://play.google.com/store/apps/dev?id=4732824418136294157&hl=en',
   );
 
-  String favouriteButton = "Unlike";
-  final FlareControls controls = FlareControls();
+
   bool contentIsLiked = false;
   String tabTitle = '';
   final bloc = FavouriteBloc();
   List<FavouriteContent> testFavourites;
-
+  FavouriteContent zContent;
 
   BannerAd createBannerAd() {
     return BannerAd(
@@ -205,6 +203,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
 
   Widget stackWidget(int tabPosition) {
     changeTitle(tabPosition);
+
     return Stack(
       children: <Widget>[
         Align(
@@ -220,16 +219,22 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
         CupertinoNavigationBar(
           leading: Opacity(
             opacity: opacityChanger(),
-            child: CupertinoButton(
-              child: Icon(
-                CupertinoIcons.back,
-                color: CupertinoColors.activeBlue,
-                size: 30.0,
-              ),
-              onPressed: () {
-                Navigator.pushReplacement(
-                    context, BackRoute(builder: (context) => HomeClass()));
-              },
+            child: Row(
+              children: <Widget>[
+                CupertinoButton(
+                  child: Icon(
+                    CupertinoIcons.back,
+                    color: CupertinoColors.activeBlue,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                        context, BackRoute(builder: (context) => HomeClass()));
+                  },
+                ),
+                Text('ተመለስ', style: TextStyle(
+                    color: CupertinoColors.activeBlue, fontSize: 12.0),)
+              ],
             ),
           ),
           middle: Text(tabTitle, style: TextStyle(fontSize: 20.0),),
@@ -249,25 +254,26 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
           ),
         ),
         Positioned(
-          bottom: 100,
-          right: 35,
+          bottom: 150,
+          right: 50,
           child: Opacity(
             opacity: opacityChanger(),
-            child: GestureDetector(
-              child: Container(
-                width: 70.0,
-                height: 70.0,
-                child: FlareActor("images/like_button.flr", animation: favouriteButton, controller: controls),
-
+            child: LikeButton(
+                size: 40,
+                circleColor: CircleColor(
+                    start: Color(0Xff00ddff), end: Color(0xff0099cc)),
+                bubblesColor: BubblesColor(
+                    dotPrimaryColor: Color(0xff33b5e5),
+                    dotSecondaryColor: Color(0xff0099cc)
               ),
-              onTap: () async {
-                FavouriteContent zContent = testFavourites[0];
-                setState(() {
-                  controls.play("Like");
-                  bloc.add(
-                      zContent); // Add to the favourite content to Database
-                });
+                likeBuilder: (bool isLiked) {
+                  return Icon(
+                    Icons.favorite,
+                    size: 30,
+                    color: isLiked ? Colors.redAccent : Colors.grey,
+                  );
               },
+                onTap: onLikeButtonTapped
             ),
 
           ),
@@ -276,6 +282,10 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
     );
   }
 
+  Future<bool> onLikeButtonTapped(bool isLiked) async {
+    bloc.add(zContent);
+    return !isLiked;
+  }
   selectAnimation(Animation<double> animType) {
     animType.addStatusListener((status) {
       setState(() {
@@ -289,7 +299,6 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   }
 
   void showInterstitialAd(int pageNumber) {
-    controls.play("Unlike");
     _myInterstitial = createInterstitialAd();
     _myInterstitial.load();
     if (pageNumber % 3 == 0) {
@@ -322,6 +331,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
                 }
                 testFavourites =
                 [FavouriteContent(favouriteContent: finalContent)];
+                zContent = testFavourites[0];
                 return Center(
                   child: Padding(
                     padding: EdgeInsets.all(25.0),

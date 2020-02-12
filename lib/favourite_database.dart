@@ -36,7 +36,7 @@ class DBProvider {
         "SELECT MAX(id)+1 as id FROM FavouriteContent");
     int id = table.first["id"];
     var raw = await db.rawInsert(
-        "INSERT Into FavouriteContent (id,favourite_content)"
+        "INSERT or REPLACE Into FavouriteContent (id,favourite_content)"
         "VALUES (?,?)",
         [id, newFavourite.favouriteContent]);
     return raw;
