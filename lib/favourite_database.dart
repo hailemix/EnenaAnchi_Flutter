@@ -11,6 +11,7 @@ class DBProvider {
 
   Database _database;
 
+
   Future<Database> get database async {
     if (_database != null) return _database;
 
@@ -54,8 +55,7 @@ class DBProvider {
     final db = await database;
     var res = await db.query("FavouriteContent");
     List<FavouriteContent> list = res.isNotEmpty
-        ? res.map((c) => FavouriteContent.fromMap(c)).toList()
-        : [];
+        ? res.map((c) => FavouriteContent.fromMap(c)).toList() : [];
     return list;
   }
 

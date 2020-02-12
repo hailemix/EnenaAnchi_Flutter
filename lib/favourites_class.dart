@@ -83,14 +83,12 @@ class MyFavouritesState extends State<MyFavourites> {
                   );
                 }
 
-                else
+                else {
                   return Center(
-                      child: Flex(
-                          direction: Axis.vertical,
-                          children: [
-                            Icon(Icons.announcement),
-                            Text('No Favourites Added')
-                          ]));
+                      child: Text('No Favourites Added')
+                  );
+                }
+
               },
             ),
           )

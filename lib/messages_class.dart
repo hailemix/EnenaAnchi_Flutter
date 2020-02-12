@@ -54,7 +54,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   );
 
 
-  bool contentIsLiked = false;
+  bool isLiked = false;
   String tabTitle = '';
   final bloc = FavouriteBloc();
   List<FavouriteContent> testFavourites;
@@ -232,8 +232,6 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
                         context, BackRoute(builder: (context) => HomeClass()));
                   },
                 ),
-                Text('ተመለስ', style: TextStyle(
-                    color: CupertinoColors.activeBlue, fontSize: 12.0),)
               ],
             ),
           ),
@@ -266,7 +264,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
                     dotPrimaryColor: Color(0xff33b5e5),
                     dotSecondaryColor: Color(0xff0099cc)
               ),
-                likeBuilder: (bool isLiked) {
+                likeBuilder: (isLiked) {
                   return Icon(
                     Icons.favorite,
                     size: 30,
@@ -282,7 +280,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
     );
   }
 
-  Future<bool> onLikeButtonTapped(bool isLiked) async {
+  Future<bool> onLikeButtonTapped(isLiked) async {
     bloc.add(zContent);
     return !isLiked;
   }
@@ -301,6 +299,9 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   void showInterstitialAd(int pageNumber) {
     _myInterstitial = createInterstitialAd();
     _myInterstitial.load();
+    setState(() {
+      isLiked = false;
+    });
     if (pageNumber % 3 == 0) {
       _myInterstitial.show(
         anchorType: AnchorType.bottom,
@@ -370,7 +371,7 @@ class BackRoute<T> extends MaterialPageRoute<T> {
         begin: 0.0,
         end: 1.0,
       ).animate(
-        CurvedAnimation(parent: animation, curve: Curves.fastOutSlowIn),
+        CurvedAnimation(parent: animation, curve: Curves.easeInOut),
       ),
       child: child,
     );
