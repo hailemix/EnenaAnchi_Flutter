@@ -36,7 +36,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   AnimationController _tapAnimationController;
   bool animationIsCompleted = false;
   bool isTapped = false;
-  String finalContent = '';
+  String finalContent = "";
   BannerAd _bannerAd;
   InterstitialAd _myInterstitial;
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -353,7 +353,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
           }
           return Center(
               child: RefreshProgressIndicator(
-                  backgroundColor: CupertinoColors.white));
+                  backgroundColor: CupertinoColors.black));
         });
   }
 }

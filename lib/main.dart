@@ -1,5 +1,6 @@
 import 'package:enena_anchi/about_us.dart';
 import 'package:enena_anchi/favourites_class.dart';
+import 'package:enena_anchi/information_class.dart';
 import 'package:enena_anchi/messages_class.dart';
 import 'package:firebase_admob/firebase_admob.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,10 +83,8 @@ class _HomeClassState extends State<HomeClass>
                               )
                             ),
                             onTap: () {
-                              setState(() {
                                 Navigator.push(context, MaterialPageRoute(
                                     builder: (context) => RomanceApp()));
-                              });
                             },
                           )
                       ),
@@ -111,7 +110,11 @@ class _HomeClassState extends State<HomeClass>
                               ],
                             ),
                             ),
-                            onTap: () {}
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(
+                                  builder: (context) => InformationClass()
+                              ));
+                            }
                         ),
                       ),
                     ),
@@ -147,11 +150,9 @@ class _HomeClassState extends State<HomeClass>
                                 ],
                               ),),
                             onTap: () {
-                              setState(() {
                                 Navigator.push(context, MaterialPageRoute(
                                     builder: (context) => MyFavourites()
                                 ));
-                              });
                             }
                         ),
                       ),),
@@ -178,10 +179,8 @@ class _HomeClassState extends State<HomeClass>
                                 ],
                               ),),
                             onTap: () {
-                              setState(() {
                                 Navigator.push(context, MaterialPageRoute(
                                     builder: (context) => AboutUs()));
-                              });
                             },
                           )
                       ),
