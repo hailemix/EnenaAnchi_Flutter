@@ -38,9 +38,9 @@ class InformationClassState extends State<InformationClass> {
                     ),
                   ),
                 ),
-                onTap: () {
+                onTap: () async {
                   zBestContents = snapshot.data.allContents[index];
-                  Navigator.push(
+                  await Navigator.push(
                       context,
                       InformationClassBackRoute(
                           builder: (context) =>
