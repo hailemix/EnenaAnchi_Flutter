@@ -10,10 +10,42 @@ class InformationClass extends StatefulWidget {
 
 class InformationClassState extends State<InformationClass> {
   String zBestContents = "";
+  List<String> contentTitles = [
+    'Go',
+    'Come',
+    'Wonders',
+    'Best Time',
+    'Sweet Memory',
+    'Can we go?',
+    'Seven',
+    'Eight',
+    'Nine',
+    'Ten',
+    'Ayense',
+    "Tsefay",
+    'Dry',
+    'Fier',
+    'Fiyunf',
+    'six',
+    'Siben',
+    'Aht',
+    'Newayn',
+    'Tseyen'
+  ];
+
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.white, child: informationJsonAccessor());
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Container(
+            color: Colors.white,
+            child: informationJsonAccessor()
+
+        ),
+      ),
+    );
   }
 
   Widget informationJsonAccessor() {
@@ -22,33 +54,27 @@ class InformationClassState extends State<InformationClass> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView.builder(
-            itemCount: 10,
+            itemCount: 20,
             itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        color: Colors.grey),
-                    child: Text(
-                      'Hello $index ****',
-                      style: TextStyle(fontSize: 20.0),
-                    ),
+              return Card(
+                child: ListTile(
+                  trailing: Icon(CupertinoIcons.forward),
+                  title: Text(
+                    '${contentTitles[index]}',
+                    style: TextStyle(fontSize: 20.0),
                   ),
+                  onTap: () async {
+                    zBestContents = snapshot.data.allContents[index];
+                    await Navigator.push(context,
+                        InformationClassBackRoute(builder: (context) =>
+                            InformationDetails(infoContent: zBestContents,
+                              title: contentTitles[index],)));
+                  },
                 ),
-                onTap: () async {
-                  zBestContents = snapshot.data.allContents[index];
-                  await Navigator.push(
-                      context,
-                      InformationClassBackRoute(
-                          builder: (context) =>
-                              InformationDetails(infoContent: zBestContents)));
-                },
               );
             },
           );
+
         } else if (snapshot.hasError) {
           return Center(
               child: Text(

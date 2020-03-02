@@ -1,11 +1,15 @@
 import 'package:enena_anchi/information_class.dart';
+import 'package:enena_anchi/main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InformationDetails extends StatefulWidget {
   final String infoContent;
+  final String title;
 
-  InformationDetails({Key key, @required this.infoContent}) : super(key: key);
+  InformationDetails(
+      {Key key, @required this.infoContent, @required this.title})
+      : super(key: key);
 
   @override
   _InformationDetailsState createState() => _InformationDetailsState();
@@ -14,10 +18,14 @@ class InformationDetails extends StatefulWidget {
 class _InformationDetailsState extends State<InformationDetails> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Best Contents'),
+    return CupertinoApp(
+      debugShowCheckedModeBanner: false,
+      home: CupertinoPageScaffold(
+
+        navigationBar: CupertinoNavigationBar(
+          backgroundColor: Colors.white,
+          middle: Text(
+            widget.title, style: TextStyle(color: CupertinoColors.black),),
           leading: CupertinoButton(
             child: Icon(
               CupertinoIcons.back,
@@ -28,8 +36,18 @@ class _InformationDetailsState extends State<InformationDetails> {
                   MaterialPageRoute(builder: (context) => InformationClass()));
             },
           ),
+          trailing: CupertinoButton(
+            child: Icon(
+              CupertinoIcons.home,
+              color: CupertinoColors.activeBlue,
+            ),
+            onPressed: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => HomeClass()));
+            },
+          ),
         ),
-        body: Center(child: Text(widget.infoContent)),
+        child: Center(child: Text(widget.infoContent)),
       ),
     );
   }
