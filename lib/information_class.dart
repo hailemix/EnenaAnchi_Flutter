@@ -11,26 +11,26 @@ class InformationClass extends StatefulWidget {
 class InformationClassState extends State<InformationClass> {
   String zBestContents = "";
   List<String> contentTitles = [
-    'Go',
-    'Come',
-    'Wonders',
-    'Best Time',
-    'Sweet Memory',
-    'Can we go?',
-    'Seven',
-    'Eight',
-    'Nine',
-    'Ten',
-    'Ayense',
-    "Tsefay",
-    'Dry',
-    'Fier',
-    'Fiyunf',
-    'six',
-    'Siben',
-    'Aht',
-    'Newayn',
-    'Tseyen'
+    'ስትበስል የምትረዳቸዉ ነገሮች',
+    'የማርታ እይታ',
+    'ሴቶችን በተመለከተ',
+    'የሚጎትተዉ እንቅፋት',
+    'የቀድሞ ፍቅረኛዬ',
+    'ምርጥ አባባሎች',
+    'አንዳንድ ቀን',
+    'መግለጫ',
+    'አዙሪት',
+    'የፍቅር ቆይታ',
+    'በራስ የሚተማመን',
+    'ባሌ ምን እያሰበ ነዉ?',
+    'የዉሸት ጓደኞች',
+    'የሰዎች አሳዛኝ ባህሪ',
+    'ወንድ ልጅ ሲያፈቅር',
+    'አስቸጋሪ ሴቶች',
+    'የፍቺ ነገር',
+    'ፍቅርና ግንኙነት',
+    'ቅናት',
+    'ምርጥ ብቀላ'
   ];
 
 
@@ -53,26 +53,29 @@ class InformationClassState extends State<InformationClass> {
       future: loadInformationContent(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return ListView.builder(
-            itemCount: 20,
-            itemBuilder: (BuildContext context, int index) {
-              return Card(
-                child: ListTile(
-                  trailing: Icon(CupertinoIcons.forward),
-                  title: Text(
-                    '${contentTitles[index]}',
-                    style: TextStyle(fontSize: 20.0),
+          return Padding(
+            padding: const EdgeInsets.only(top: 50.0, bottom: 30.0),
+            child: ListView.builder(
+              itemCount: 20,
+              itemBuilder: (BuildContext context, int index) {
+                return Card(
+                  child: ListTile(
+                    trailing: Icon(CupertinoIcons.forward),
+                    title: Text(
+                      '${contentTitles[index]}',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    onTap: () async {
+                      zBestContents = snapshot.data.allContents[index];
+                      await Navigator.push(context,
+                          InformationClassBackRoute(builder: (context) =>
+                              InformationDetails(infoContent: zBestContents,
+                                title: contentTitles[index],)));
+                    },
                   ),
-                  onTap: () async {
-                    zBestContents = snapshot.data.allContents[index];
-                    await Navigator.push(context,
-                        InformationClassBackRoute(builder: (context) =>
-                            InformationDetails(infoContent: zBestContents,
-                              title: contentTitles[index],)));
-                  },
-                ),
-              );
-            },
+                );
+              },
+            ),
           );
 
         } else if (snapshot.hasError) {

@@ -20,6 +20,7 @@ class _InformationDetailsState extends State<InformationDetails> {
   Widget build(BuildContext context) {
     return CupertinoApp(
       debugShowCheckedModeBanner: false,
+
       home: CupertinoPageScaffold(
 
         navigationBar: CupertinoNavigationBar(
@@ -47,7 +48,20 @@ class _InformationDetailsState extends State<InformationDetails> {
             },
           ),
         ),
-        child: Center(child: Text(widget.infoContent)),
+        child: Column(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 5.0, top: 40.0),
+                    child: Text(widget.infoContent,
+                      style: TextStyle(fontSize: 16.0,),),
+                  ),
+                ),
+              ),
+            ]
+        ),
       ),
     );
   }
