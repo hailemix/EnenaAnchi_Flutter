@@ -40,7 +40,7 @@ class MyHomePageState extends State<RomanceApp> with TickerProviderStateMixin {
   BannerAd _bannerAd;
   InterstitialAd _myInterstitial;
   FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
+   MobileAdTargetingInfo targetingInfo = MobileAdTargetingInfo(
     keywords: <String>[
       'enena anchi',
       'amharic love quotes',

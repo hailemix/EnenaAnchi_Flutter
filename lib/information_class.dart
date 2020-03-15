@@ -3,6 +3,8 @@ import 'package:enena_anchi/information_json_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
+
 class InformationClass extends StatefulWidget {
   @override
   InformationClassState createState() => InformationClassState();
@@ -10,11 +12,12 @@ class InformationClass extends StatefulWidget {
 
 class InformationClassState extends State<InformationClass> {
   String zBestContents = "";
+
   List<String> contentTitles = [
     'ስትበስል የምትረዳቸዉ ነገሮች',
     'የማርታ እይታ',
     'ሴቶችን በተመለከተ',
-    'የሚጎትተዉ እንቅፋት',
+    'እንቅፋት',
     'የቀድሞ ፍቅረኛዬ',
     'ምርጥ አባባሎች',
     'አንዳንድ ቀን',
@@ -54,7 +57,7 @@ class InformationClassState extends State<InformationClass> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return Padding(
-            padding: const EdgeInsets.only(top: 50.0, bottom: 30.0),
+            padding: const EdgeInsets.only(top: 50.0, bottom: 50.0),
             child: ListView.builder(
               itemCount: 20,
               itemBuilder: (BuildContext context, int index) {
